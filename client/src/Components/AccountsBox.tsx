@@ -34,13 +34,17 @@ const AccountIcon = styled.div`
 `
 const AccountName = styled.h4`
     width: 150px;
+    color: #444;
 `
 const AccountType = styled.p`
     flex: 1;
     text-align: center;
+    color: #666;
+    font-style: italic;
 `
 const AccountValue = styled.h3`
     width: 150px;
+    color: blue;
 `
 
 export const AccountsBox = () => {

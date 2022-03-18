@@ -22,6 +22,7 @@ const InfoBox = styled.div`
     width: 200px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #999;
+    background-color: white;
     height: 75px;
     display: flex;
     justify-content: center;

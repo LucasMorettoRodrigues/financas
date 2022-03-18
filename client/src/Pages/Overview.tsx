@@ -5,7 +5,7 @@ import { AppNavbar } from '../Components/AppNavbar'
 import { ResumeBox } from '../Components/ResumeBox'
 
 const Container = styled.div`
-    background-color: aliceblue;
+    background-color: #F9F9F9;
 `
 
 const Wrapper = styled.div`
