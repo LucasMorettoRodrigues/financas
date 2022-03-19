@@ -38,18 +38,12 @@ const Button = styled.button`
     font-size: 25px;
     font-weight: bold;
     cursor: pointer;
+    color: white;
     transition: all .5s ease;
-
-    >a {
-        color: white;
-    }
-
-    &:hover a {
-        color: darkgreen;
-    }
 
     &:hover {
         background-color: lightgreen;
+        color: darkgreen;
     }
 `
 const Image = styled.img`
@@ -69,9 +63,9 @@ export const Header = () => {
                 <SecondaryText>
                     Cadastre todos os seus gastos, monitore todas as suas contas, saiba o destino de cada centavo
                 </SecondaryText>
-                <Button>
-                    <Link to={'/app'}>Comece já</Link>
-                </Button>
+                <Link to={'/app'}>
+                    <Button>Comece já</Button>
+                </Link>
             </Left>
             <Right>
                 <Image src="https://cdn-icons-png.flaticon.com/512/2040/2040826.png"></Image>

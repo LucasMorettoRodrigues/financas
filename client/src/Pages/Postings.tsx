@@ -58,23 +58,47 @@ const TableItem = styled.div`
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 10px;
-    color: #666;
+    margin-bottom: 8px;
 `
-const TDate = styled.div``
+const TDate = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    color: #888;
+    font-weight: 500;
+    font-size: 15px;
+`
 const TCategory = styled.div`
     flex: 1;
+    color: #333;
+    font-weight: 500;
+    font-size: 15px;
     
 `
 const TDescription = styled.div`
     flex: 1.5;
+    color: #555;
+    font-weight: 100;
+    font-size: 19px;
 `
 const TableAccount = styled.div`
     flex: 1;
+    font-size: 15px;
+    font-weight: 400;
+    color: #888;
+    font-style: italic;
 `
-const TValue = styled.div`
+const TValue = styled.div<{ color: string }>`
     width: 100px;
     text-align: end;
+    color: ${props => props.color};
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
 `
 
 type Props = {
@@ -112,7 +136,10 @@ export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: 
                                     <TCategory>{posting.category}</TCategory>
                                     <TDescription>{posting.description}</TDescription>
                                     <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
-                                    <TValue>{posting.type === 'expense' && '-'} {posting.value}</TValue>
+                                    <TValue color={posting.type === 'expense' ? 'red'
+                                        : posting.type === 'income' ? 'green' : '#555'}>
+                                        {posting.type === 'expense' && '-'} {posting.value}
+                                    </TValue>
                                 </TableItem>
                             ))}
                         </PostingsDiv>
