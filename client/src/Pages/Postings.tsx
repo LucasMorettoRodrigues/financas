@@ -3,6 +3,7 @@ import { AppNavbar } from '../Components/AppNavbar'
 import { useState } from 'react'
 import { Modal } from '../Components/Modal'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { formatDate } from '../Utils/dateFunctions'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -39,13 +40,14 @@ const Arrow = styled.button`
     align-items: center;
     font-size: 20px;
     color: #555;
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: white;
     border: none;
     cursor: pointer;
 `
 const Data = styled.p`
-    margin: 0 20px;
+    margin: 0 10px;
+    width: 190px;
     color: #555;
     font-size: 20px;
     font-weight: 400;
@@ -73,7 +75,12 @@ const TValue = styled.div`
     text-align: end;
 `
 
-export const Postings = () => {
+type Props = {
+    currentDate: Date
+    handleChangeDate: (action: string) => void
+}
+
+export const Postings = ({ currentDate, handleChangeDate }: Props) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentModal, setCurrentModal] = useState("")
@@ -82,6 +89,8 @@ export const Postings = () => {
         setCurrentModal(modal)
         setIsModalOpen(true)
     }
+
+    const date = new Date(2022, 3, 10)
 
     return (
         <>
@@ -96,9 +105,9 @@ export const Postings = () => {
                         />
                         <PostingsDiv>
                             <ContainerData>
-                                <Arrow><BsChevronLeft /></Arrow>
-                                <Data>Março de 2022</Data>
-                                <Arrow><BsChevronRight /></Arrow>
+                                <Arrow onClick={() => handleChangeDate('prev')}><BsChevronLeft /></Arrow>
+                                <Data>{formatDate(currentDate)}</Data>
+                                <Arrow onClick={() => handleChangeDate('next')}><BsChevronRight /></Arrow>
                             </ContainerData>
                             <TableItem>
                                 <TDate>01</TDate>

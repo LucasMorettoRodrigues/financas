@@ -4,10 +4,6 @@ import { AccountsBox } from '../Components/AccountsBox'
 import { ActionsBox } from '../Components/ActionsBox'
 import { AppNavbar } from '../Components/AppNavbar'
 import { ResumeBox } from '../Components/ResumeBox'
-
-import { accounts as accountsData } from '../Data/accounts'
-import { postings as postingData } from '../Data/postings'
-import { users as usersData } from '../Data/users'
 import { TAccount } from '../Types/taccount'
 import { TPosting } from '../Types/tposting'
 
@@ -21,17 +17,12 @@ const Wrapper = styled.div`
     padding: 40px 0;
 `
 
-export const Overview = () => {
+type Props = {
+    accounts: TAccount[]
+    postings: TPosting[]
+}
 
-    const currentUser = usersData[0]
-    const [accounts, setAccounts] = useState<TAccount[]>([])
-    const [postings, setPostings] = useState<TPosting[]>([])
-
-    useEffect(() => {
-        setPostings(postingData.filter((item) => item.user_id === currentUser.id))
-        setAccounts(accountsData.filter((item) => item.user_id === currentUser.id))
-    }, [accounts])
-
+export const Overview = ({ accounts, postings }: Props) => {
     return (
         <>
             <AppNavbar />
