@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -34,15 +35,21 @@ const Button = styled.button`
     border-radius: 10px;
     border: 3px solid darkgreen;
     background-color: darkgreen;
-    color: white;
     font-size: 25px;
     font-weight: bold;
     cursor: pointer;
     transition: all .5s ease;
 
+    >a {
+        color: white;
+    }
+
+    &:hover a {
+        color: darkgreen;
+    }
+
     &:hover {
         background-color: lightgreen;
-        color: darkgreen;
     }
 `
 const Image = styled.img`
@@ -63,7 +70,7 @@ export const Header = () => {
                     Cadastre todos os seus gastos, monitore todas as suas contas, saiba o destino de cada centavo
                 </SecondaryText>
                 <Button>
-                    Comece já
+                    <Link to={'/app'}>Comece já</Link>
                 </Button>
             </Left>
             <Right>

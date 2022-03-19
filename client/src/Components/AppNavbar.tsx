@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -45,13 +46,12 @@ export const AppNavbar = () => {
     return (
         <Container>
             <Wrapper>
-                <Left>Finanças</Left>
+                <Left><Link to={'/'}>Finanças</Link></Left>
                 <Center>
                     <List>
-                        <ListItem>Resumo</ListItem>
-                        <ListItem>Contas</ListItem>
-                        <ListItem>Lançamentos</ListItem>
-                        <ListItem>Relatórios</ListItem>
+                        <ListItem><Link to={'/app'}>Resumo</Link></ListItem>
+                        <ListItem><Link to={'/app/accounts'}>Contas</Link></ListItem>
+                        <ListItem><Link to={'/app/postings'}>Lançamentos</Link></ListItem>
                     </List>
                 </Center>
                 <Right>

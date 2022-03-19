@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { AccountsBox } from '../Components/AccountsBox'
 import { ActionsBox } from '../Components/ActionsBox'

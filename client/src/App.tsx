@@ -16,12 +16,17 @@ function App() {
   const currentUser = usersData[0]
   const [accounts, setAccounts] = useState<TAccount[]>([])
   const [postings, setPostings] = useState<TPosting[]>([])
+  const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
   const [currentDate, setCurrentDate] = useState(new Date(2022, 3, 10))
 
   useEffect(() => {
     setPostings(postingData.filter((item) => item.user_id === currentUser.id))
     setAccounts(accountsData.filter((item) => item.user_id === currentUser.id))
-  }, [accounts])
+  }, [currentUser.id])
+
+  useEffect(() => {
+    setFilteredPostings(postings.filter(item => item.date.getMonth() === currentDate.getMonth()))
+  }, [postings, currentDate])
 
   const handleChangeDate = (action: string): void => {
     action === 'next'
@@ -34,7 +39,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/app" element={<Overview accounts={accounts} postings={postings} />} />
-        <Route path="/app/postings" element={<Postings currentDate={currentDate} handleChangeDate={handleChangeDate} />} />
+        <Route path="/app/postings" element={
+          <Postings
+            currentDate={currentDate}
+            handleChangeDate={handleChangeDate}
+            postings={filteredPostings}
+            accounts={accounts}
+          />}
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Modal } from '../Components/Modal'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { formatDate } from '../Utils/dateFunctions'
+import { TPosting } from '../Types/tposting'
+import { TAccount } from '../Types/taccount'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -67,7 +69,7 @@ const TCategory = styled.div`
 const TDescription = styled.div`
     flex: 1.5;
 `
-const TAccount = styled.div`
+const TableAccount = styled.div`
     flex: 1;
 `
 const TValue = styled.div`
@@ -77,20 +79,15 @@ const TValue = styled.div`
 
 type Props = {
     currentDate: Date
-    handleChangeDate: (action: string) => void
+    handleChangeDate: (action: string) => void,
+    postings: TPosting[]
+    accounts: TAccount[]
 }
 
-export const Postings = ({ currentDate, handleChangeDate }: Props) => {
+export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: Props) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentModal, setCurrentModal] = useState("")
-
-    const handleClick = (modal: string) => {
-        setCurrentModal(modal)
-        setIsModalOpen(true)
-    }
-
-    const date = new Date(2022, 3, 10)
 
     return (
         <>
@@ -109,20 +106,15 @@ export const Postings = ({ currentDate, handleChangeDate }: Props) => {
                                 <Data>{formatDate(currentDate)}</Data>
                                 <Arrow onClick={() => handleChangeDate('next')}><BsChevronRight /></Arrow>
                             </ContainerData>
-                            <TableItem>
-                                <TDate>01</TDate>
-                                <TCategory>Alimentação</TCategory>
-                                <TDescription>Burger King</TDescription>
-                                <TAccount>1235651</TAccount>
-                                <TValue>- 20</TValue>
-                            </TableItem>
-                            <TableItem>
-                                <TDate>02</TDate>
-                                <TCategory>Salário</TCategory>
-                                <TDescription>Salário</TDescription>
-                                <TAccount>1235651</TAccount>
-                                <TValue>4000</TValue>
-                            </TableItem>
+                            {postings.map(posting => (
+                                <TableItem key={posting.id}>
+                                    <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
+                                    <TCategory>{posting.category}</TCategory>
+                                    <TDescription>{posting.description}</TDescription>
+                                    <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
+                                    <TValue>{posting.type === 'expense' && '-'} {posting.value}</TValue>
+                                </TableItem>
+                            ))}
                         </PostingsDiv>
                     </Box>
                 </Wrapper>

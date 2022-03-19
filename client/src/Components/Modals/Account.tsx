@@ -19,14 +19,6 @@ const Input = styled.input`
     border: 1px solid #999;
     outline-color: lightblue;
 `
-const Select = styled.select`
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid #999;
-    background-color: white;
-    outline-color: lightblue;
-`
 const Button = styled.button`
     padding: 10px 20px;
     color: white;

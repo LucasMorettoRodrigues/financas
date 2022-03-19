@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { TAccount } from '../Types/taccount'
-import { TPosting } from '../Types/tposting'
 
 const Container = styled.div`
     padding: 40px;
