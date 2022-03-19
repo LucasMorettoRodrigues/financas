@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { TAccount } from '../Types/taccount'
+import { TPosting } from '../Types/tposting'
 
 const Container = styled.div`
     padding: 40px;
@@ -39,25 +41,45 @@ const InfoValue = styled.p`
     font-weight: 200;
 `
 
-export const ResumeBox = () => {
+type Props = {
+    accounts: TAccount[]
+    postings: TPosting[]
+}
+
+export const ResumeBox = ({ accounts, postings }: Props) => {
     return (
         <Container>
             <Wrapper>
                 <Title>Hello, John Doe</Title>
-                <Title>Saldo Total: $ 100.000,00</Title>
+                <Title>
+                    Saldo Total: $ {accounts.reduce((sum, account) => sum + account.balance, 0)}
+                </Title>
             </Wrapper>
             <Wrapper>
                 <InfoBox>
                     <InfoTitle>Receitas</InfoTitle>
-                    <InfoValue>$ 2.000,00</InfoValue>
+                    <InfoValue>$ {postings
+                        .filter(item => item.type === 'income')
+                        .reduce((sum, posting) => sum + posting.value, 0)}
+                    </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Despesas</InfoTitle>
-                    <InfoValue>$ 1.500,00</InfoValue>
+                    <InfoValue>$ {postings
+                        .filter(item => item.type === 'expense')
+                        .reduce((sum, posting) => sum + posting.value, 0)}
+                    </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Balanço</InfoTitle>
-                    <InfoValue>$ 500,00</InfoValue>
+                    <InfoValue>$ {postings
+                        .filter(item => item.type === 'income')
+                        .reduce((sum, posting) => sum + posting.value, 0) -
+                        postings
+                            .filter(item => item.type === 'expense')
+                            .reduce((sum, posting) => sum + posting.value, 0)
+                    }
+                    </InfoValue>
                 </InfoBox>
                 <InfoBox>Ver Lançamentos</InfoBox>
             </Wrapper>

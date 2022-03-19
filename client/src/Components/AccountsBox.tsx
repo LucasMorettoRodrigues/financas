@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { TAccount } from '../Types/taccount'
+import { TPosting } from '../Types/tposting'
 
 const Container = styled.div`
     padding: 40px;
@@ -47,23 +49,23 @@ const AccountValue = styled.h3`
     color: blue;
 `
 
-export const AccountsBox = () => {
+type Props = {
+    accounts: TAccount[]
+}
+
+export const AccountsBox = ({ accounts }: Props) => {
     return (
         <Container>
             <Title>Minhas Contas</Title>
             <List>
-                <ListItem>
-                    <AccountIcon>B</AccountIcon>
-                    <AccountName>Banco do Brasil</AccountName>
-                    <AccountType>conta corrente</AccountType>
-                    <AccountValue>$ 10.000,00</AccountValue>
-                </ListItem>
-                <ListItem>
-                    <AccountIcon>I</AccountIcon>
-                    <AccountName>Banco Inter</AccountName>
-                    <AccountType>conta corrente</AccountType>
-                    <AccountValue>$ 20.000,00</AccountValue>
-                </ListItem>
+                {accounts.map(item => (
+                    <ListItem key={item.id}>
+                        <AccountIcon>{item.name[0]}</AccountIcon>
+                        <AccountName>{item.name}</AccountName>
+                        <AccountType>{item.type}</AccountType>
+                        <AccountValue>$ {item.balance}</AccountValue>
+                    </ListItem>
+                ))}
             </List>
         </Container>
     )

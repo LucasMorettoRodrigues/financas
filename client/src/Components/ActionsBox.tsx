@@ -44,33 +44,33 @@ const ButtonText = styled.p`
 export const ActionsBox = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [currentModal, setCurrentModal] = useState("")
 
-    const handleClick = (action: string) => {
-        if (action === "income") {
-            setIsModalOpen(true)
-        }
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false)
+    const handleClick = (modal: string) => {
+        setCurrentModal(modal)
+        setIsModalOpen(true)
     }
 
     return (
         <Container>
-            <Modal isOpen={isModalOpen} closeModal={closeModal} />
+            <Modal
+                isOpen={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+                modal={currentModal}
+            />
             <Button onClick={() => handleClick('income')} color='lightgreen'>
                 <BsPlusCircle fontSize='50px' color='green' />
                 <ButtonText>Nova Receita</ButtonText>
             </Button>
-            <Button onClick={() => handleClick('income')} color='#FF8F8F'>
+            <Button onClick={() => handleClick('expense')} color='#FF8F8F'>
                 <BsDashCircle fontSize='50px' color='red' />
                 <ButtonText>Nova Despesa</ButtonText>
             </Button>
-            <Button onClick={() => handleClick('income')} color='lightblue'>
+            <Button onClick={() => handleClick('transfer')} color='lightblue'>
                 <BsArrowLeftRight fontSize='50px' color='blue' />
                 <ButtonText>Transferência</ButtonText>
             </Button>
-            <Button onClick={() => handleClick('income')} color='#FFCF8F'>
+            <Button onClick={() => handleClick('account')} color='#FFCF8F'>
                 <BsPiggyBank fontSize='50px' color='orange' />
                 <ButtonText>Nova Conta</ButtonText>
             </Button>

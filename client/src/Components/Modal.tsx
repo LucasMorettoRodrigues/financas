@@ -1,4 +1,8 @@
 import styled from "styled-components"
+import { Expense } from "./Modals/Expense"
+import { Income } from "./Modals/Income"
+import { Transfer } from "./Modals/Transfer"
+import { Account } from "./Modals/Account"
 
 const Container = styled.div<{ isOpen: boolean }>`
     visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
@@ -12,7 +16,7 @@ const Container = styled.div<{ isOpen: boolean }>`
     height: 100vh;
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
-    transition: all 1s ease;
+    transition: all .5s ease;
 `
 const Aux = styled.div`
     width: 100vw;
@@ -20,27 +24,32 @@ const Aux = styled.div`
 `
 const InnerContainer = styled.div`
     position: fixed;
-    padding: 40px;
+    padding: 30px 40px;
+    width: 500px;
     top: 8%;
     background-color: white;
-    width: 500px;
-    height: 500px;
     border-radius: 10px;
-    z-index: 11;
 `
 
 type Props = {
     isOpen: boolean
-    closeModal: () => void
+    closeModal: () => void,
+    modal: string
 }
 
-export const Modal = ({ isOpen, closeModal }: Props) => {
+export const Modal = ({ isOpen, closeModal, modal }: Props) => {
     return (
-        <Container isOpen={isOpen}>
-            <Aux onClick={closeModal}></Aux>
-            <InnerContainer>
-                Nova Despesa
-            </InnerContainer>
-        </Container>
+        <>
+            <Container isOpen={isOpen}>
+                <Aux onClick={closeModal}></Aux>
+                <InnerContainer>
+                    {modal === 'income' && <Income />}
+                    {modal === 'expense' && <Expense />}
+                    {modal === 'transfer' && <Transfer />}
+                    {modal === 'account' && <Account />}
+                </InnerContainer>
+            </Container>
+        </>
+
     )
 }
