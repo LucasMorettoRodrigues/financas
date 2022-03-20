@@ -7,6 +7,7 @@ export type TPosting = {
     type: string,
     account_id: string,
     user_id: string
+    from_account_id?: string
 }
 
 export type TPosting1 = {
@@ -17,5 +18,6 @@ export type TPosting1 = {
     value: number,
     type: string,
     account_id: string,
-    user_id: string
+    user_id: string,
+    from_account_id?: string
 }

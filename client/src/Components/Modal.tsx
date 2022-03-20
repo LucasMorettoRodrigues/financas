@@ -43,10 +43,10 @@ export const Modal = ({ isOpen, closeModal, modal }: Props) => {
             <Container isOpen={isOpen}>
                 <Aux onClick={closeModal}></Aux>
                 <InnerContainer>
-                    {modal === 'income' && <Income />}
-                    {modal === 'expense' && <Expense />}
-                    {modal === 'transfer' && <Transfer />}
-                    {modal === 'account' && <Account />}
+                    {modal === 'income' && <Income closeModal={closeModal} />}
+                    {modal === 'expense' && <Expense closeModal={closeModal} />}
+                    {modal === 'transfer' && <Transfer closeModal={closeModal} />}
+                    {modal === 'account' && <Account closeModal={closeModal} />}
                 </InnerContainer>
             </Container>
         </>

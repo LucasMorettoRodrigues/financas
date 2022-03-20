@@ -1,8 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
-import { useAppDispatch } from '../../Redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
 import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
+import { dateNow } from "../../Utils/dateFunctions"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -44,9 +45,14 @@ const Button = styled.button`
     cursor: pointer;
 `
 
-export const Expense = () => {
+type Props = {
+    closeModal: () => void,
+}
+
+export const Expense = ({ closeModal }: Props) => {
 
     const dispatch = useAppDispatch()
+    const accounts = useAppSelector(state => state.accounts.accounts)
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
@@ -56,7 +62,7 @@ export const Expense = () => {
 
     const handleOnClick = () => {
         const newPosting: TPosting1 = {
-            id: '5',
+            id: '0005',
             description: description,
             category: category,
             date: date,
@@ -67,7 +73,7 @@ export const Expense = () => {
         }
 
         dispatch(addPosting(newPosting))
-        console.log('click');
+        closeModal()
     }
 
     return (
@@ -83,14 +89,13 @@ export const Expense = () => {
             </InputLabel>
             <InputLabel>
                 Data
-                <Input onChange={(e) => setDate(e.target.value)} type='date'></Input>
+                <Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></Input>
             </InputLabel>
             <InputLabel>
                 Conta
                 <Select onChange={(e) => setAccount(e.target.value)}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
             <InputLabel>

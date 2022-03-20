@@ -1,4 +1,9 @@
+import { useState } from "react"
 import styled from "styled-components"
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks"
+import { addPosting } from "../../Redux/postingsSlice"
+import { TPosting1 } from "../../Types/tposting"
+import { dateNow } from "../../Utils/dateFunctions"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -37,41 +42,71 @@ const Button = styled.button`
     border: none;
     margin-top: 10px;
     width: 100%;
+    cursor: pointer;
 `
 
-export const Transfer = () => {
+type Props = {
+    closeModal: () => void,
+}
+
+export const Transfer = ({ closeModal }: Props) => {
+
+    const dispatch = useAppDispatch()
+    const accounts = useAppSelector(state => state.accounts.accounts)
+
+    const [description, setDescription] = useState('')
+    const [value, setValue] = useState(0)
+    const [date, setDate] = useState('')
+    const [fromAccount, setFromAccount] = useState('')
+    const [toAccount, setToAccount] = useState('')
+
+    const handleOnClick = () => {
+        const newPosting: TPosting1 = {
+            id: '5',
+            description: description,
+            category: 'Transference',
+            date: date,
+            value: value,
+            type: 'transference',
+            account_id: toAccount,
+            from_account_id: fromAccount,
+            user_id: '0001'
+        }
+
+        dispatch(addPosting(newPosting))
+        closeModal()
+    }
+
     return (
         <>
             <Title>Nova transferência</Title>
             <InputLabel>
                 Descrição
-                <Input type='text'></Input>
+                <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
-                <Input type='number'></Input>
+                <Input onChange={(e) => setValue(parseFloat(e.target.value))} type='number'></Input>
             </InputLabel>
             <InputLabel>
                 Data
-                <Input type='date'></Input>
+                <Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></Input>
             </InputLabel>
             <InputLabel>
                 Saiu da conta
-                <Select>
+                <Select onChange={(e) => setFromAccount(e.target.value)}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
             <InputLabel>
                 Entrou na conta
-                <Select>
+                <Select onChange={(e) => setToAccount(e.target.value)}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
-            <Button>Continuar</Button>
+            <Button onClick={handleOnClick}>Continuar</Button>
         </>
     )
 }

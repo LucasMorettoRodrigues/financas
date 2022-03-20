@@ -2,19 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TAccount } from '../Types/taccount'
 import { accounts } from '../Data/accounts'
 
-// Define the initial state using that type
-const initialState: TAccount[] = accounts
-
 export const accountSlice = createSlice({
     name: 'accounts',
-    initialState,
+    initialState: {
+        accounts: accounts
+    },
     reducers: {
         // decrement: state => {
         //     state.value -= 1
         // },
         // Use the PayloadAction type to declare the contents of `action.payload`
         addAccount: (state, action: PayloadAction<TAccount>) => {
-            state = [...state, action.payload]
+            state.accounts = [...state.accounts, action.payload]
         }
     }
 })

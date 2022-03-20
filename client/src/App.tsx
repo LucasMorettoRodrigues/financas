@@ -11,8 +11,8 @@ import { stringToDate } from "./Utils/dateFunctions";
 
 function App() {
 
-  const reduxPostings = useAppSelector(state => state.postings)
-  const accounts = useAppSelector(state => state.accounts)
+  const reduxPostings = useAppSelector(state => state.postings.postings)
+  const accounts = useAppSelector(state => state.accounts.accounts)
 
   const [postings, setPostings] = useState<TPosting[]>([])
   const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     // Set Postings with Date type
-    setPostings(reduxPostings.postings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
+    setPostings(reduxPostings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
   }, [reduxPostings])
 
   useEffect(() => {

@@ -13,3 +13,10 @@ export const stringToDate = (date: string): Date => {
     return new Date(parseInt(year), parseInt(month), parseInt(day))
 }
 
+export const dateNow = (): string => {
+    const now = new Date()
+    return `${now.getFullYear()}-${addZeroToDate(now.getMonth())}-${addZeroToDate(now.getDate())}`
+}
+
+const addZeroToDate = (n: number): string => n < 10 ? `0${n}` : `${n}`
+

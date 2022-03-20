@@ -1,4 +1,8 @@
+import { useState } from "react"
 import styled from "styled-components"
+import { addAccount } from "../../Redux/accountsSlice"
+import { useAppDispatch } from "../../Redux/hooks"
+import { TAccount } from "../../Types/taccount"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -29,25 +33,50 @@ const Button = styled.button`
     border: none;
     margin-top: 10px;
     width: 100%;
+    cursor: pointer;
 `
 
-export const Account = () => {
+type Props = {
+    closeModal: () => void,
+}
+
+export const Account = ({ closeModal }: Props) => {
+
+    const dispatch = useAppDispatch()
+
+    const [name, setName] = useState('')
+    const [type, setType] = useState('')
+    const [inicialBalance, setInicialBalance] = useState(0)
+
+    const handleOnClick = () => {
+        const newAccount: TAccount = {
+            id: '0005',
+            name: name,
+            type: type,
+            balance: inicialBalance,
+            user_id: '0001'
+        }
+
+        dispatch(addAccount(newAccount))
+        closeModal()
+    }
+
     return (
         <>
             <Title>Nova conta</Title>
             <InputLabel>
                 Nome da nova conta
-                <Input type='text'></Input>
+                <Input onChange={(e) => setName(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Tipo da nova conta
-                <Input type='text'></Input>
+                <Input onChange={(e) => setType(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Saldo Inicial
-                <Input type='number'></Input>
+                <Input onChange={(e) => setInicialBalance(parseFloat(e.target.value))} type='number'></Input>
             </InputLabel>
-            <Button>Continuar</Button>
+            <Button onClick={handleOnClick}>Continuar</Button>
         </>
     )
 }
