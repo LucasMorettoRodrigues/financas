@@ -1,4 +1,8 @@
+import { useState } from "react"
 import styled from "styled-components"
+import { useAppDispatch } from '../../Redux/hooks'
+import { addPosting } from "../../Redux/postingsSlice"
+import { TPosting1 } from "../../Types/tposting"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -37,27 +41,53 @@ const Button = styled.button`
     border: none;
     margin-top: 10px;
     width: 100%;
+    cursor: pointer;
 `
 
 export const Expense = () => {
+
+    const dispatch = useAppDispatch()
+
+    const [description, setDescription] = useState('')
+    const [value, setValue] = useState(0)
+    const [date, setDate] = useState('')
+    const [account, setAccount] = useState('')
+    const [category, setCategory] = useState('')
+
+    const handleOnClick = () => {
+        const newPosting: TPosting1 = {
+            id: '5',
+            description: description,
+            category: category,
+            date: date,
+            value: value,
+            type: 'expense',
+            account_id: account,
+            user_id: '0001'
+        }
+
+        dispatch(addPosting(newPosting))
+        console.log('click');
+    }
+
     return (
         <>
             <Title>Nova despesa</Title>
             <InputLabel>
                 Descrição
-                <Input type='text'></Input>
+                <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
-                <Input type='number'></Input>
+                <Input onChange={(e) => setValue(parseFloat(e.target.value))} type='number'></Input>
             </InputLabel>
             <InputLabel>
                 Data
-                <Input type='date'></Input>
+                <Input onChange={(e) => setDate(e.target.value)} type='date'></Input>
             </InputLabel>
             <InputLabel>
                 Conta
-                <Select>
+                <Select onChange={(e) => setAccount(e.target.value)}>
                     <option></option>
                     <option>aaa</option>
                     <option>bbb</option>
@@ -65,13 +95,13 @@ export const Expense = () => {
             </InputLabel>
             <InputLabel>
                 Categoria
-                <Select>
+                <Select onChange={(e) => setCategory(e.target.value)}>
                     <option></option>
                     <option>aaa</option>
                     <option>bbb</option>
                 </Select>
             </InputLabel>
-            <Button>Continuar</Button>
+            <Button onClick={handleOnClick}>Continuar</Button>
         </>
     )
 }

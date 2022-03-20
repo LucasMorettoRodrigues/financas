@@ -4,29 +4,28 @@ import { Home } from "./Pages/Home";
 import { Overview } from "./Pages/Overview";
 import { Postings } from "./Pages/Postings";
 
-import { accounts as accountsData } from './Data/accounts'
-import { postings as postingData } from './Data/postings'
-import { users as usersData } from './Data/users'
-
-import { TAccount } from './Types/taccount'
 import { TPosting } from './Types/tposting'
+
+import { useAppSelector } from './Redux/hooks'
+import { stringToDate } from "./Utils/dateFunctions";
 
 function App() {
 
-  const currentUser = usersData[0]
-  const [accounts, setAccounts] = useState<TAccount[]>([])
+  const reduxPostings = useAppSelector(state => state.postings)
+  const accounts = useAppSelector(state => state.accounts)
+
   const [postings, setPostings] = useState<TPosting[]>([])
   const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
   const [currentDate, setCurrentDate] = useState(new Date(2022, 3, 10))
 
   useEffect(() => {
-    setPostings(postingData.filter((item) => item.user_id === currentUser.id))
-    setAccounts(accountsData.filter((item) => item.user_id === currentUser.id))
-  }, [currentUser.id])
+    // Set Postings with Date type
+    setPostings(reduxPostings.postings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
+  }, [reduxPostings])
 
   useEffect(() => {
     setFilteredPostings(postings.filter(item => item.date.getMonth() === currentDate.getMonth()))
-  }, [postings, currentDate])
+  }, [currentDate, postings])
 
   const handleChangeDate = (action: string): void => {
     action === 'next'

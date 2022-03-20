@@ -8,3 +8,14 @@ export type TPosting = {
     account_id: string,
     user_id: string
 }
+
+export type TPosting1 = {
+    id: string,
+    description: string,
+    category: string,
+    date: string,
+    value: number,
+    type: string,
+    account_id: string,
+    user_id: string
+}
