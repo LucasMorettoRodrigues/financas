@@ -1,9 +1,11 @@
 import { useState } from "react"
 import styled from "styled-components"
+import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks"
 import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
 import { dateNow } from "../../Utils/dateFunctions"
+import { Error } from "./Error"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -59,34 +61,74 @@ export const Transfer = ({ closeModal }: Props) => {
     const [date, setDate] = useState(dateNow())
     const [fromAccount, setFromAccount] = useState('')
     const [toAccount, setToAccount] = useState('')
+    const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
-        const newPosting: TPosting1 = {
+
+        let err = []
+
+        if (description.length < 1) err.push('Forneça a descrição.')
+        if (value === 0) err.push('Valor deve ser maior que 0.')
+        if (isNaN(value)) err.push('Forneça o valor.')
+        if (toAccount.length < 1) err.push('Selecione a conta de entrada.')
+        if (fromAccount.length < 1) err.push('Selecione a conta de saída.')
+        if (fromAccount === toAccount && fromAccount.length > 0) err.push('Conta de saída igual a conta de entrada.')
+
+        setErrors(err)
+
+        if (err.length > 0) return
+
+        const newPostingOut: TPosting1 = {
             id: '5',
             description: description,
-            category: 'Transferencia',
+            category: 'Transf. Saída',
             date: date,
-            value: value,
-            type: 'transferencia',
-            account_id: toAccount,
-            from_account_id: fromAccount,
+            value: value * (-1),
+            type: 'transferency',
+            account_id: fromAccount,
             user_id: '0001'
         }
 
-        dispatch(addPosting(newPosting))
+        const newPostingIn: TPosting1 = {
+            id: '6',
+            description: description,
+            category: 'Transf. Entrada',
+            date: date,
+            value: value,
+            type: 'transferency',
+            account_id: toAccount,
+            user_id: '0001'
+        }
+
+        dispatch(addPosting(newPostingOut))
+        dispatch(addPosting(newPostingIn))
+        dispatch(refreshBalance({ account_id: toAccount, value: value }))
+        dispatch(refreshBalance({ account_id: fromAccount, value: -value }))
         closeModal()
+        clearFields()
+    }
+
+    const clearFields = () => {
+        setDescription('')
+        setValue(0)
+        setDate(dateNow())
+        setToAccount('')
+        setFromAccount('')
     }
 
     return (
         <>
             <Title>Nova transferência</Title>
+            {errors.length > 0 && <Error errors={errors} />}
+            {console.log(value)
+            }
             <InputLabel>
                 Descrição
                 <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
-                <Input onChange={(e) => setValue(parseFloat(e.target.value))} type='number'></Input>
+                <Input onChange={(e) => setValue(parseFloat(e.target.value))} value={value} min={0} type='number'></Input>
             </InputLabel>
             <InputLabel>
                 Data

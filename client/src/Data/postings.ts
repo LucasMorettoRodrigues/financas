@@ -4,7 +4,7 @@ export const postings = [
         description: "Burger King",
         category: "Alimentação",
         date: "2022-3-19",
-        value: 60,
+        value: -60,
         type: "expense",
         account_id: "0001",
         user_id: "0001"
@@ -24,7 +24,7 @@ export const postings = [
         description: "Pizza",
         category: "Alimentação",
         date: "2022-3-19",
-        value: 80,
+        value: -80,
         type: "expense",
         account_id: "0002",
         user_id: "0001"
@@ -34,7 +34,7 @@ export const postings = [
         description: "Etanol",
         category: "Combustível",
         date: "2022-3-19",
-        value: 100,
+        value: -100,
         type: "expense",
         account_id: "0002",
         user_id: "0001"
@@ -44,7 +44,7 @@ export const postings = [
         description: "Celular",
         category: "Recarga",
         date: "2022-3-19",
-        value: 40,
+        value: -40,
         type: "expense",
         account_id: "0001",
         user_id: "0001"

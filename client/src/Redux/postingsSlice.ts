@@ -8,10 +8,6 @@ export const postingSlice = createSlice({
         postings: postings
     },
     reducers: {
-        // decrement: state => {
-        //     state.value -= 1
-        // },
-        // Use the PayloadAction type to declare the contents of `action.payload`
         addPosting: (state, action: PayloadAction<TPosting1>) => {
             state.postings = [...state.postings, action.payload]
         }

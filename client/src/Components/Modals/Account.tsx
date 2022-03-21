@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { addAccount } from "../../Redux/accountsSlice"
 import { useAppDispatch } from "../../Redux/hooks"
 import { TAccount } from "../../Types/taccount"
+import { Error } from "./Error"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -46,24 +47,45 @@ export const Account = ({ closeModal }: Props) => {
 
     const [name, setName] = useState('')
     const [type, setType] = useState('')
-    const [inicialBalance, setInicialBalance] = useState(0)
+    const [initialBalance, setInitialBalance] = useState(0)
+    const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
+
+        let err = []
+
+        if (name.length < 1) err.push('Forneça o nome da conta.')
+        if (type.length < 1) err.push('Forneça o tipo da conta.')
+        if (isNaN(initialBalance)) err.push('Forneça o valor.')
+
+        setErrors(err)
+
+        if (errors) return
+
         const newAccount: TAccount = {
             id: '0005',
             name: name,
             type: type,
-            balance: inicialBalance,
+            balance: initialBalance,
             user_id: '0001'
         }
 
         dispatch(addAccount(newAccount))
         closeModal()
+        clearFields()
+    }
+
+    const clearFields = () => {
+        setName('')
+        setType('')
+        setInitialBalance(0)
+        setErrors([])
     }
 
     return (
         <>
             <Title>Nova conta</Title>
+            {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Nome da nova conta
                 <Input onChange={(e) => setName(e.target.value)} type='text'></Input>
@@ -73,8 +95,8 @@ export const Account = ({ closeModal }: Props) => {
                 <Input onChange={(e) => setType(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
-                Saldo Inicial
-                <Input onChange={(e) => setInicialBalance(parseFloat(e.target.value))} type='number'></Input>
+                Saldo Initial
+                <Input onChange={(e) => setInitialBalance(parseFloat(e.target.value))} value={initialBalance} min={0} type='number'></Input>
             </InputLabel>
             <Button onClick={handleOnClick}>Continuar</Button>
         </>

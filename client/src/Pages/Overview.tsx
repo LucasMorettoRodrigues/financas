@@ -9,7 +9,6 @@ import { TPosting } from '../Types/tposting'
 const Container = styled.div`
     background-color: #F9F9F9;
 `
-
 const Wrapper = styled.div`
     max-width: 1200px;
     margin: 0 auto;

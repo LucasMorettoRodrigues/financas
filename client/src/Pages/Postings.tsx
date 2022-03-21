@@ -145,8 +145,8 @@ export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: 
                                         <TCategory>{posting.category}</TCategory>
                                         <TDescription>{posting.description}</TDescription>
                                         <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
-                                        <TValue color={posting.type === 'expense' ? 'red' : 'green'}>
-                                            {posting.type === 'expense' && '-'} {posting.value}
+                                        <TValue color={posting.value < 0 ? 'red' : 'green'}>
+                                            {posting.value}
                                         </TValue>
                                     </TableItem>
                                 ))

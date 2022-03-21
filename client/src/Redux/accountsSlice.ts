@@ -8,17 +8,19 @@ export const accountSlice = createSlice({
         accounts: accounts
     },
     reducers: {
-        // decrement: state => {
-        //     state.value -= 1
-        // },
-        // Use the PayloadAction type to declare the contents of `action.payload`
         addAccount: (state, action: PayloadAction<TAccount>) => {
             state.accounts = [...state.accounts, action.payload]
+        },
+        refreshBalance: (state, action) => {
+            state.accounts = state.accounts.map((account) => (account.id === action.payload.account_id
+                ? Object.assign({}, account, { balance: account.balance + action.payload.value })
+                : account
+            ))
         }
     }
 })
 
-export const { addAccount } = accountSlice.actions
+export const { addAccount, refreshBalance } = accountSlice.actions
 
 // // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

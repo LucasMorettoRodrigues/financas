@@ -1,9 +1,11 @@
 import { useState } from "react"
 import styled from "styled-components"
+import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
 import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
 import { dateNow } from "../../Utils/dateFunctions"
+import { Error } from "./Error"
 
 const Title = styled.h4`
     margin-bottom: 20px;
@@ -59,33 +61,58 @@ export const Expense = ({ closeModal }: Props) => {
     const [date, setDate] = useState(dateNow())
     const [account, setAccount] = useState('')
     const [category, setCategory] = useState('')
+    const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
+
+        let err = []
+
+        if (description.length < 1) err.push('Forneça a descrição.')
+        if (category.length < 1) err.push('Seleciona uma categoria.')
+        if (isNaN(value)) err.push('Forneça o valor.')
+        if (value === 0) err.push('Valor deve ser maior que 0.')
+        if (account.length < 1) err.push('Selecione uma conta.')
+
+        setErrors(err)
+
+        if (err.length > 0) return
+
         const newPosting: TPosting1 = {
             id: '0005',
             description: description,
             category: category,
             date: date,
-            value: value,
+            value: -value,
             type: 'expense',
             account_id: account,
             user_id: '0001'
         }
 
         dispatch(addPosting(newPosting))
+        dispatch(refreshBalance({ account_id: '0001', value: -value }))
         closeModal()
+        clearFields()
+    }
+
+    const clearFields = () => {
+        setDescription('')
+        setValue(0)
+        setDate(dateNow())
+        setAccount('')
+        setCategory('')
     }
 
     return (
         <>
             <Title>Nova despesa</Title>
+            {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Descrição
                 <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
-                <Input onChange={(e) => setValue(parseFloat(e.target.value))} type='number'></Input>
+                <Input onChange={(e) => setValue(parseFloat(e.target.value))} value={value} min={0} type='number'></Input>
             </InputLabel>
             <InputLabel>
                 Data
