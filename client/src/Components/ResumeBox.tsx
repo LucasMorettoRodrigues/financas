@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { TAccount } from '../Types/taccount'
+import { useAppSelector } from '../Redux/hooks'
 import { TPosting } from '../Types/tposting'
+import { stringToDate } from '../Utils/dateFunctions'
 
 const Container = styled.div`
     padding: 40px;
@@ -69,12 +71,18 @@ const Button = styled.button`
     color: green;
 `
 
-type Props = {
-    accounts: TAccount[]
-    postings: TPosting[]
-}
+export const ResumeBox = () => {
 
-export const ResumeBox = ({ accounts, postings }: Props) => {
+    const accounts = useAppSelector(state => state.accounts.accounts)
+    const reduxPostings = useAppSelector(state => state.postings.postings)
+
+    const [postings, setPostings] = useState<TPosting[]>([])
+
+    useEffect(() => {
+        // Set Postings with Date type
+        setPostings(reduxPostings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
+    }, [reduxPostings])
+
     return (
         <Container>
             <Wrapper>

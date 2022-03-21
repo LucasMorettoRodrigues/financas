@@ -74,7 +74,6 @@ export const Income = ({ closeModal }: Props) => {
         if (account.length < 1) err.push('Selecione uma conta.')
 
         setErrors(err)
-
         if (err.length > 0) return
 
         const newPosting: TPosting1 = {
@@ -108,7 +107,7 @@ export const Income = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Descrição
-                <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
+                <Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
@@ -120,14 +119,14 @@ export const Income = ({ closeModal }: Props) => {
             </InputLabel>
             <InputLabel>
                 Conta
-                <Select onChange={(e) => setAccount(e.target.value)}>
+                <Select onChange={(e) => setAccount(e.target.value)} value={account}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
             <InputLabel>
                 Categoria
-                <Select onChange={(e) => setCategory(e.target.value)}>
+                <Select onChange={(e) => setCategory(e.target.value)} value={category}>
                     <option></option>
                     <option>aaa</option>
                     <option>bbb</option>

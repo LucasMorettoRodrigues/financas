@@ -73,9 +73,10 @@ export const Transfer = ({ closeModal }: Props) => {
         if (toAccount.length < 1) err.push('Selecione a conta de entrada.')
         if (fromAccount.length < 1) err.push('Selecione a conta de saída.')
         if (fromAccount === toAccount && fromAccount.length > 0) err.push('Conta de saída igual a conta de entrada.')
+        if (accounts.find(x => x.id === fromAccount) &&
+            accounts.find(x => x.id === fromAccount)?.balance! < value) err.push('Saldo insuficiente.')
 
         setErrors(err)
-
         if (err.length > 0) return
 
         const newPostingOut: TPosting1 = {
@@ -124,7 +125,7 @@ export const Transfer = ({ closeModal }: Props) => {
             }
             <InputLabel>
                 Descrição
-                <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
+                <Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
@@ -136,14 +137,14 @@ export const Transfer = ({ closeModal }: Props) => {
             </InputLabel>
             <InputLabel>
                 Saiu da conta
-                <Select onChange={(e) => setFromAccount(e.target.value)}>
+                <Select onChange={(e) => setFromAccount(e.target.value)} value={fromAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
             <InputLabel>
                 Entrou na conta
-                <Select onChange={(e) => setToAccount(e.target.value)}>
+                <Select onChange={(e) => setToAccount(e.target.value)} value={toAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>

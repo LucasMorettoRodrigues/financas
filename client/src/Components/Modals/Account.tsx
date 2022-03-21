@@ -59,8 +59,7 @@ export const Account = ({ closeModal }: Props) => {
         if (isNaN(initialBalance)) err.push('Forneça o valor.')
 
         setErrors(err)
-
-        if (errors) return
+        if (err.length > 0) return
 
         const newAccount: TAccount = {
             id: '0005',
@@ -71,15 +70,14 @@ export const Account = ({ closeModal }: Props) => {
         }
 
         dispatch(addAccount(newAccount))
-        closeModal()
         clearFields()
+        closeModal()
     }
 
     const clearFields = () => {
         setName('')
         setType('')
         setInitialBalance(0)
-        setErrors([])
     }
 
     return (
@@ -88,11 +86,11 @@ export const Account = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Nome da nova conta
-                <Input onChange={(e) => setName(e.target.value)} type='text'></Input>
+                <Input onChange={(e) => setName(e.target.value)} value={name} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Tipo da nova conta
-                <Input onChange={(e) => setType(e.target.value)} type='text'></Input>
+                <Input onChange={(e) => setType(e.target.value)} value={type} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Saldo Initial

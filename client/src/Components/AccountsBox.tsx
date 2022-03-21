@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { TAccount } from '../Types/taccount'
+import { useAppSelector } from '../Redux/hooks'
 
 const Container = styled.div`
     padding: 40px;
@@ -61,11 +61,10 @@ const AccountValue = styled.h3`
     letter-spacing: 0px;
 `
 
-type Props = {
-    accounts: TAccount[]
-}
+export const AccountsBox = () => {
 
-export const AccountsBox = ({ accounts }: Props) => {
+    const accounts = useAppSelector(state => state.accounts.accounts)
+
     return (
         <Container>
             <Title>Minhas Contas</Title>

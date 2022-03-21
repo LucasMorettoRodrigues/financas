@@ -59,7 +59,7 @@ export const Expense = ({ closeModal }: Props) => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
     const [date, setDate] = useState(dateNow())
-    const [account, setAccount] = useState('')
+    const [accountId, setAccountId] = useState('')
     const [category, setCategory] = useState('')
     const [errors, setErrors] = useState<string[]>([])
 
@@ -71,10 +71,11 @@ export const Expense = ({ closeModal }: Props) => {
         if (category.length < 1) err.push('Seleciona uma categoria.')
         if (isNaN(value)) err.push('Forneça o valor.')
         if (value === 0) err.push('Valor deve ser maior que 0.')
-        if (account.length < 1) err.push('Selecione uma conta.')
+        if (accountId.length < 1) err.push('Selecione uma conta.')
+        if (accounts.find(x => x.id === accountId) &&
+            accounts.find(x => x.id === accountId)?.balance! < value) err.push('Saldo insuficiente.')
 
         setErrors(err)
-
         if (err.length > 0) return
 
         const newPosting: TPosting1 = {
@@ -84,7 +85,7 @@ export const Expense = ({ closeModal }: Props) => {
             date: date,
             value: -value,
             type: 'expense',
-            account_id: account,
+            account_id: accountId,
             user_id: '0001'
         }
 
@@ -98,7 +99,7 @@ export const Expense = ({ closeModal }: Props) => {
         setDescription('')
         setValue(0)
         setDate(dateNow())
-        setAccount('')
+        setAccountId('')
         setCategory('')
     }
 
@@ -108,7 +109,7 @@ export const Expense = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Descrição
-                <Input onChange={(e) => setDescription(e.target.value)} type='text'></Input>
+                <Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></Input>
             </InputLabel>
             <InputLabel>
                 Valor
@@ -120,14 +121,14 @@ export const Expense = ({ closeModal }: Props) => {
             </InputLabel>
             <InputLabel>
                 Conta
-                <Select onChange={(e) => setAccount(e.target.value)}>
+                <Select onChange={(e) => setAccountId(e.target.value)} value={accountId}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </Select>
             </InputLabel>
             <InputLabel>
                 Categoria
-                <Select onChange={(e) => setCategory(e.target.value)}>
+                <Select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option></option>
                     <option>aaa</option>
                     <option>bbb</option>

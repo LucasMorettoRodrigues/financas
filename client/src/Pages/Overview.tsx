@@ -3,8 +3,6 @@ import { AccountsBox } from '../Components/AccountsBox'
 import { ActionsBox } from '../Components/ActionsBox'
 import { AppNavbar } from '../Components/AppNavbar'
 import { ResumeBox } from '../Components/ResumeBox'
-import { TAccount } from '../Types/taccount'
-import { TPosting } from '../Types/tposting'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -15,20 +13,15 @@ const Wrapper = styled.div`
     padding: 40px 0;
 `
 
-type Props = {
-    accounts: TAccount[]
-    postings: TPosting[]
-}
-
-export const Overview = ({ accounts, postings }: Props) => {
+export const Overview = () => {
     return (
         <>
             <AppNavbar />
             <Container>
                 <Wrapper>
-                    <ResumeBox accounts={accounts} postings={postings} />
+                    <ResumeBox />
                     <ActionsBox />
-                    <AccountsBox accounts={accounts} />
+                    <AccountsBox />
                 </Wrapper>
             </Container>
         </>

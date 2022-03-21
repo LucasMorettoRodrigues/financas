@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { AppNavbar } from '../Components/AppNavbar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal } from '../Components/Modal'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { formatDate } from '../Utils/dateFunctions'
+import { formatDate, stringToDate } from '../Utils/dateFunctions'
 import { TPosting } from '../Types/tposting'
-import { TAccount } from '../Types/taccount'
+import { useAppSelector } from '../Redux/hooks'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -108,17 +108,31 @@ const Info = styled.div`
     margin-bottom: 10px;
 `
 
-type Props = {
-    currentDate: Date
-    handleChangeDate: (action: string) => void,
-    postings: TPosting[]
-    accounts: TAccount[]
-}
+export const Postings = () => {
 
-export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: Props) => {
+    const accounts = useAppSelector(state => state.accounts.accounts)
+    const reduxPostings = useAppSelector(state => state.postings.postings)
 
+    const [postings, setPostings] = useState<TPosting[]>([])
+    const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
+    const [currentDate, setCurrentDate] = useState(new Date())
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentModal, setCurrentModal] = useState("")
+
+    useEffect(() => {
+        // Set Postings with Date type
+        setPostings(reduxPostings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
+    }, [reduxPostings])
+
+    useEffect(() => {
+        setFilteredPostings(postings.filter(item => item.date.getMonth() === currentDate.getMonth() + 1))
+    }, [currentDate, postings])
+
+    const handleChangeDate = (action: string): void => {
+        action === 'next'
+            ? setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
+            : setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
+    }
 
     return (
         <>
@@ -139,7 +153,7 @@ export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: 
                             </ContainerData>
                             {postings.length > 0
                                 ?
-                                postings.map(posting => (
+                                filteredPostings.map(posting => (
                                     <TableItem key={posting.id}>
                                         <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
                                         <TCategory>{posting.category}</TCategory>
