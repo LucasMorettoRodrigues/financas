@@ -56,7 +56,7 @@ export const Transfer = ({ closeModal }: Props) => {
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(dateNow())
     const [fromAccount, setFromAccount] = useState('')
     const [toAccount, setToAccount] = useState('')
 
@@ -64,10 +64,10 @@ export const Transfer = ({ closeModal }: Props) => {
         const newPosting: TPosting1 = {
             id: '5',
             description: description,
-            category: 'Transference',
+            category: 'Transferencia',
             date: date,
             value: value,
-            type: 'transference',
+            type: 'transferencia',
             account_id: toAccount,
             from_account_id: fromAccount,
             user_id: '0001'

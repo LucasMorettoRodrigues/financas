@@ -13,6 +13,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: radial-gradient(white, #D7FFC3);
 `
 const Button = styled.button`
     width: 150px;
@@ -21,7 +22,7 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F8F8F8;
+    background-color: white;
     border: none;
     box-shadow: 2px 2px 5px #888;
     cursor: pointer;
@@ -39,6 +40,7 @@ const ButtonText = styled.p`
     font-size: 14px;
     font-weight: bold;
     margin-top: 14px;
+    color: #444;
 `
 
 export const ActionsBox = () => {

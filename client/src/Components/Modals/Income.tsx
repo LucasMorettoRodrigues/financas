@@ -56,7 +56,7 @@ export const Income = ({ closeModal }: Props) => {
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(dateNow())
     const [account, setAccount] = useState('')
     const [category, setCategory] = useState('')
 

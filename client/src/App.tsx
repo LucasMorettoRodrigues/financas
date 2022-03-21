@@ -16,7 +16,7 @@ function App() {
 
   const [postings, setPostings] = useState<TPosting[]>([])
   const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
-  const [currentDate, setCurrentDate] = useState(new Date(2022, 3, 10))
+  const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
     // Set Postings with Date type
@@ -24,13 +24,13 @@ function App() {
   }, [reduxPostings])
 
   useEffect(() => {
-    setFilteredPostings(postings.filter(item => item.date.getMonth() === currentDate.getMonth()))
+    setFilteredPostings(postings.filter(item => item.date.getMonth() === currentDate.getMonth() + 1))
   }, [currentDate, postings])
 
   const handleChangeDate = (action: string): void => {
     action === 'next'
-      ? setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDay()))
-      : setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDay()))
+      ? setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
+      : setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
   }
 
   return (

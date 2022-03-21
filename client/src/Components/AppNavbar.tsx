@@ -8,12 +8,12 @@ const Wrapper = styled.div`
     max-width: 1200px;
     display: flex;
     align-items: center;
-    padding: 10px 10px;
+    padding: 0 10px;
     margin: 0 auto;
 `
 const Left = styled.div`
-    font-weight: bold;
-    font-size: 40px;
+    font-weight: 600;
+    font-size: 30px;
     color: #111;
 `
 const Center = styled.div`
@@ -21,6 +21,7 @@ const Center = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 8x 0;
 `
 const Right = styled.div``
 
@@ -32,13 +33,13 @@ const ListItem = styled.li`
     font-weight: 300;
     font-size: 20px;
     z-index: 1;
-    border-bottom: 2px solid lightgreen;
+    border-bottom: 4px solid lightgreen;
     cursor: pointer;
     transition: all .5s ease;
 
     &:hover {
         color: darkgreen;
-        border-bottom: 2px solid darkgreen;
+        border-bottom: 4px solid white;
     }
 `
 

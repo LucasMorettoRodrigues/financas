@@ -8,10 +8,14 @@ const Container = styled.div`
     border-radius: 10px;
     box-shadow: 0 0 5px #999;
     margin-bottom: 40px;
+    background: radial-gradient(white, #D7FFC3);
 `
 const Title = styled.h3`
     margin-bottom: 40px;
-    color: #555;
+    color: #111;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-style: italic;
 `
 const List = styled.ul``
 const ListItem = styled.li`
@@ -22,6 +26,7 @@ const ListItem = styled.li`
     border-radius: 10px;
     gap: 15px;
     margin-bottom: 10px;
+    background-color: white;
 `
 const AccountIcon = styled.div`
     margin-left: 5px;
@@ -32,20 +37,28 @@ const AccountIcon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #444;
+    font-weight: 500;
+    font-size: 16px;
 `
 const AccountName = styled.h4`
     width: 150px;
-    color: #444;
+    color: #222;
+    font-weight: 600;
+    letter-spacing: 2px;
 `
 const AccountType = styled.p`
     flex: 1;
     text-align: center;
     color: #666;
     font-style: italic;
+    letter-spacing: 2px;
 `
 const AccountValue = styled.h3`
     width: 150px;
-    color: blue;
+    color: #2783E5;
+    font-weight: 500;
+    letter-spacing: 0px;
 `
 
 type Props = {

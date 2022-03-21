@@ -64,13 +64,13 @@ const TDate = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: lightgray;
-    width: 33px;
-    height: 33px;
+    background-color: #E8E8E8;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    color: #888;
+    color: #999;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
 `
 const TCategory = styled.div`
     flex: 1;
@@ -99,6 +99,13 @@ const TValue = styled.div<{ color: string }>`
     font-size: 16px;
     font-weight: 400;
     letter-spacing: 1px;
+`
+const Info = styled.div`
+    text-align: center;
+    font-style: italic;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 10px;
 `
 
 type Props = {
@@ -130,18 +137,21 @@ export const Postings = ({ currentDate, handleChangeDate, postings, accounts }: 
                                 <Data>{formatDate(currentDate)}</Data>
                                 <Arrow onClick={() => handleChangeDate('next')}><BsChevronRight /></Arrow>
                             </ContainerData>
-                            {postings.map(posting => (
-                                <TableItem key={posting.id}>
-                                    <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
-                                    <TCategory>{posting.category}</TCategory>
-                                    <TDescription>{posting.description}</TDescription>
-                                    <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
-                                    <TValue color={posting.type === 'expense' ? 'red'
-                                        : posting.type === 'income' ? 'green' : '#555'}>
-                                        {posting.type === 'expense' && '-'} {posting.value}
-                                    </TValue>
-                                </TableItem>
-                            ))}
+                            {postings.length > 0
+                                ?
+                                postings.map(posting => (
+                                    <TableItem key={posting.id}>
+                                        <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
+                                        <TCategory>{posting.category}</TCategory>
+                                        <TDescription>{posting.description}</TDescription>
+                                        <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
+                                        <TValue color={posting.type === 'expense' ? 'red' : 'green'}>
+                                            {posting.type === 'expense' && '-'} {posting.value}
+                                        </TValue>
+                                    </TableItem>
+                                ))
+                                : <Info>Não há lançamentos cadastrados para este mês.</Info>
+                            }
                         </PostingsDiv>
                     </Box>
                 </Wrapper>

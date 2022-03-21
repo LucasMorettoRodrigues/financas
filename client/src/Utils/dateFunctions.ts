@@ -1,9 +1,7 @@
 export const formatDate = (date: Date): string => {
-    console.log(date.getMonth());
-
     const brMonths = [
-        'Dezembro', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
-        'Agosto', 'Setembro', 'Outubro', 'Novembro']
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+        'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
     return `${brMonths[date.getMonth()]} de ${date.getFullYear()}`
 }
@@ -15,7 +13,7 @@ export const stringToDate = (date: string): Date => {
 
 export const dateNow = (): string => {
     const now = new Date()
-    return `${now.getFullYear()}-${addZeroToDate(now.getMonth())}-${addZeroToDate(now.getDate())}`
+    return `${now.getFullYear()}-${addZeroToDate(now.getMonth() + 1)}-${addZeroToDate(now.getDate())}`
 }
 
 const addZeroToDate = (n: number): string => n < 10 ? `0${n}` : `${n}`
