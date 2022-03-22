@@ -6,6 +6,7 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { formatDate, stringToDate } from '../Utils/dateFunctions'
 import { TPosting } from '../Types/tposting'
 import { useAppSelector } from '../Redux/hooks'
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -96,9 +97,8 @@ const TValue = styled.div<{ color: string }>`
     width: 100px;
     text-align: end;
     color: ${props => props.color};
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
-    letter-spacing: 1px;
 `
 const Info = styled.div`
     text-align: center;
@@ -107,7 +107,23 @@ const Info = styled.div`
     color: #888;
     margin-bottom: 10px;
 `
-const Button = styled.button``
+const Buttons = styled.div`
+    display: flex;
+    margin-left: 10px;
+`
+const Button = styled.button`
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #888;
+
+    &:hover {
+        color: black;
+    }
+`
 
 export const Postings = () => {
 
@@ -152,7 +168,7 @@ export const Postings = () => {
                                 <Data>{formatDate(currentDate)}</Data>
                                 <Arrow onClick={() => handleChangeDate('next')}><BsChevronRight /></Arrow>
                             </ContainerData>
-                            {postings.length > 0
+                            {filteredPostings.length > 0
                                 ?
                                 filteredPostings.map((posting, index) => (
                                     <TableItem key={index}>
@@ -171,10 +187,13 @@ export const Postings = () => {
                                                 : accounts.find(account => account.id === posting.account_id)!.name
                                             }
                                         </TableAccount>
-                                        <TValue color={posting.value < 0 ? 'red' : 'green'}>
+                                        <TValue color={posting.value < 0 ? '#FF2D2D' : '#1BB620'}>
                                             {posting.value}
                                         </TValue>
-                                        <Button onClick={() => handleOnClick(posting)}>Edit</Button>
+                                        <Buttons>
+                                            <Button onClick={() => handleOnClick(posting)}><FaRegEdit fontSize='16px' /></Button>
+                                            <Button onClick={() => handleOnClick(posting)}><FaRegTrashAlt fontSize='16px' /></Button>
+                                        </Buttons>
                                     </TableItem>
                                 ))
                                 : <Info>Não há lançamentos cadastrados para este mês.</Info>

@@ -37,10 +37,10 @@ const Button = styled.button`
     }
 `
 const ButtonText = styled.p`
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 14px;
-    color: #444;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #555;
 `
 
 export const ActionsBox = () => {
@@ -61,15 +61,15 @@ export const ActionsBox = () => {
                 modal={currentModal}
             />
             <Button onClick={() => handleClick('income')} color='lightgreen'>
-                <BsPlusCircle fontSize='50px' color='green' />
+                <BsPlusCircle fontSize='50px' color='#1BB620' />
                 <ButtonText>Nova Receita</ButtonText>
             </Button>
-            <Button onClick={() => handleClick('expense')} color='#FF8F8F'>
-                <BsDashCircle fontSize='50px' color='red' />
+            <Button onClick={() => handleClick('expense')} color='#FFA5A5'>
+                <BsDashCircle fontSize='50px' color='#FF2D2D' />
                 <ButtonText>Nova Despesa</ButtonText>
             </Button>
             <Button onClick={() => handleClick('transfer')} color='lightblue'>
-                <BsArrowLeftRight fontSize='50px' color='blue' />
+                <BsArrowLeftRight fontSize='50px' color='#2783E5' />
                 <ButtonText>Transferência</ButtonText>
             </Button>
             <Button onClick={() => handleClick('account')} color='#FFCF8F'>

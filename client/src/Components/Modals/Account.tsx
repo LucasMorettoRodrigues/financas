@@ -1,41 +1,9 @@
 import { useState } from "react"
-import styled from "styled-components"
 import { addAccount } from "../../Redux/accountsSlice"
 import { useAppDispatch } from "../../Redux/hooks"
 import { TAccount } from "../../Types/taccount"
 import { Error } from "./Error"
-
-const Title = styled.h4`
-    margin-bottom: 20px;
-    color: #666;
-`
-const InputLabel = styled.label`
-    display: flex;
-    flex-direction: column;
-    font-size: 15px;
-    color: #555;
-    gap: 5px;
-    margin-bottom: 10px;
-`
-const Input = styled.input`
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid #999;
-    outline-color: lightblue;
-`
-const Button = styled.button`
-    padding: 10px 20px;
-    color: white;
-    background-color: green;
-    font-weight: bold;
-    font-size: 15px;
-    border-radius: 10px;
-    border: none;
-    margin-top: 10px;
-    width: 100%;
-    cursor: pointer;
-`
+import * as S from './styles'
 
 type Props = {
     closeModal: () => void
@@ -82,21 +50,21 @@ export const Account = ({ closeModal }: Props) => {
 
     return (
         <>
-            <Title>Nova conta</Title>
+            <S.Title>Nova conta</S.Title>
             {errors.length > 0 && <Error errors={errors} />}
-            <InputLabel>
+            <S.InputLabel>
                 Nome da nova conta
-                <Input onChange={(e) => setName(e.target.value)} value={name} type='text'></Input>
-            </InputLabel>
-            <InputLabel>
+                <S.Input onChange={(e) => setName(e.target.value)} value={name} type='text'></S.Input>
+            </S.InputLabel>
+            <S.InputLabel>
                 Tipo da nova conta
-                <Input onChange={(e) => setType(e.target.value)} value={type} type='text'></Input>
-            </InputLabel>
-            <InputLabel>
+                <S.Input onChange={(e) => setType(e.target.value)} value={type} type='text'></S.Input>
+            </S.InputLabel>
+            <S.InputLabel>
                 Saldo Initial
-                <Input onChange={(e) => setInitialBalance(parseFloat(e.target.value))} value={initialBalance} min={0} type='number'></Input>
-            </InputLabel>
-            <Button onClick={handleOnClick}>Continuar</Button>
+                <S.Input onChange={(e) => setInitialBalance(parseFloat(e.target.value))} value={initialBalance} min={0} type='number'></S.Input>
+            </S.InputLabel>
+            <S.Button onClick={handleOnClick}>Continuar</S.Button>
         </>
     )
 }

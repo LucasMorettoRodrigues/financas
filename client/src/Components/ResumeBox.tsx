@@ -16,17 +16,13 @@ const Container = styled.div`
 `
 const Title = styled.h3`
     margin-bottom: 40px;
-    color: #111;
-    font-size: 16px;
-    letter-spacing: 2px;
-    font-style: italic;
+    color: #555;
+    font-size: 18px;
 
     >span {
         color: #2783E5;
-        font-size: 20px;
-        font-weight: 500;
-        font-style: normal;
-        letter-spacing: 1px;
+        font-size: 26px;
+        font-weight: 600;
     }
 `
 const Wrapper = styled.div`
@@ -46,17 +42,16 @@ const InfoBox = styled.div`
     flex-direction: column;
 `
 const InfoTitle = styled.h4`
-    margin-bottom: 4px;
-    letter-spacing: 1.6px;
+    margin-top: 5px;
     font-weight: 400;
-    font-style: italic;
-    color: #444;
-    font-size: 16px;
+    color: #555;
+    font-size: 18px;
 `
 const InfoValue = styled.p<{ color: string }>`
+    margin-top: -5px;
     text-align: end;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 22px;
+    font-weight: 600;
     color: ${props => props.color};
 `
 const Button = styled.button`
@@ -65,10 +60,9 @@ const Button = styled.button`
     cursor: pointer;
     background-color: inherit   ;
     border: none;
-    font-size: 16px;
-    letter-spacing: 2px;
+    font-size: 22px;
     font-weight: 600;
-    color: green;
+    color: #1BB620;
 `
 
 export const ResumeBox = () => {
@@ -94,14 +88,14 @@ export const ResumeBox = () => {
             <Wrapper>
                 <InfoBox>
                     <InfoTitle>Receita Mensal</InfoTitle>
-                    <InfoValue color='green'>$ {postings
+                    <InfoValue color='#1BB620'>$ {postings
                         .filter(item => item.type === 'Income')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Despesa Mensal</InfoTitle>
-                    <InfoValue color='red'>$ {postings
+                    <InfoValue color='#FF2D2D'>$ {postings
                         .filter(item => item.type === 'Expense')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>

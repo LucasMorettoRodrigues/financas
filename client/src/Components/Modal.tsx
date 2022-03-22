@@ -31,7 +31,7 @@ const InnerContainer = styled.div`
     position: fixed;
     padding: 30px 40px;
     width: 500px;
-    top: 8%;
+    top: 5%;
     background-color: white;
     border-radius: 10px;
 `

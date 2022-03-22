@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useAppSelector } from '../Redux/hooks'
 import { TAccount } from '../Types/taccount'
 import { Modal } from './Modal'
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 
 const Container = styled.div`
     padding: 40px;
@@ -15,10 +16,8 @@ const Container = styled.div`
 `
 const Title = styled.h3`
     margin-bottom: 40px;
-    color: #111;
-    letter-spacing: 2px;
-    font-size: 16px;
-    font-style: italic;
+    color: #444;
+    font-size: 18px;
 `
 const List = styled.ul``
 const ListItem = styled.li`
@@ -42,28 +41,44 @@ const AccountIcon = styled.div`
     justify-content: center;
     color: #444;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 20px;
 `
 const AccountName = styled.h4`
     width: 150px;
-    color: #222;
+    color: #444;
     font-weight: 600;
-    letter-spacing: 2px;
+    font-size: 18px;
+    letter-spacing: 1.2px;
 `
 const AccountType = styled.p`
     flex: 1;
     text-align: center;
-    color: #666;
+    color: #888;
     font-style: italic;
-    letter-spacing: 2px;
 `
 const AccountValue = styled.h3`
-    width: 150px;
+    width: 100px;
     color: #2783E5;
-    font-weight: 500;
-    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 20px;
 `
-const Button = styled.button``
+const Buttons = styled.div`
+    margin-right: 20px;
+    display: flex;
+`
+const Button = styled.button`
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    margin-right: 15px;
+    color: #888;
+
+    &:hover {
+        color: black;
+    }
+`
 
 export const AccountsBox = () => {
 
@@ -93,7 +108,10 @@ export const AccountsBox = () => {
                         <AccountName>{item.name}</AccountName>
                         <AccountType>{item.type}</AccountType>
                         <AccountValue>$ {item.balance}</AccountValue>
-                        <Button onClick={() => handleOnClick(item)}>Edit</Button>
+                        <Buttons>
+                            <Button onClick={() => handleOnClick(item)}><FaRegEdit fontSize='18px' /></Button>
+                            <Button onClick={() => handleOnClick(item)}><FaRegTrashAlt fontSize='18px' /></Button>
+                        </Buttons>
                     </ListItem>
                 ))}
             </List>
