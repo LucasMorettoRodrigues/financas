@@ -22,11 +22,17 @@ export const postingSlice = createSlice({
                         ? action.payload
                         : item
                     ))
+        },
+        deletePostingById: (state, action: PayloadAction<string>) => {
+            state.postings = state.postings.filter((item) => item.id !== action.payload)
+        },
+        deletePostingsByAccountId: (state, action: PayloadAction<string>) => {
+            state.postings = state.postings.filter((item) => item.account_id !== action.payload)
         }
     }
 })
 
-export const { addPosting, editPosting } = postingSlice.actions
+export const { addPosting, editPosting, deletePostingById, deletePostingsByAccountId } = postingSlice.actions
 
 // // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

@@ -22,11 +22,14 @@ export const accountSlice = createSlice({
                 ? action.payload
                 : account
             ))
+        },
+        deleteAccountById: (state, action: PayloadAction<string>) => {
+            state.accounts = state.accounts.filter((account) => account.id !== action.payload)
         }
     }
 })
 
-export const { addAccount, refreshBalance, editAccount } = accountSlice.actions
+export const { addAccount, refreshBalance, editAccount, deleteAccountById } = accountSlice.actions
 
 // // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

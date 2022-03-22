@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useAppSelector } from '../Redux/hooks'
+import { useAppDispatch, useAppSelector } from '../Redux/hooks'
 import { TAccount } from '../Types/taccount'
 import { Modal } from './Modal'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
+import { deletePostingsByAccountId } from '../Redux/postingsSlice'
+import { deleteAccountById } from '../Redux/accountsSlice'
 
 const Container = styled.div`
     padding: 40px;
@@ -83,13 +85,19 @@ const Button = styled.button`
 export const AccountsBox = () => {
 
     const accounts = useAppSelector(state => state.accounts.accounts)
+    const dispatch = useAppDispatch()
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [accountToEdit, setAccountToEdit] = useState<TAccount | null>(null)
 
-    const handleOnClick = (account: TAccount) => {
+    const handleEdit = (account: TAccount) => {
         setAccountToEdit(account)
         setIsModalOpen(true)
+    }
+
+    const handleDelete = (account: TAccount) => {
+        dispatch(deletePostingsByAccountId(account.id))
+        dispatch(deleteAccountById(account.id))
     }
 
     return (
@@ -109,8 +117,8 @@ export const AccountsBox = () => {
                         <AccountType>{item.type}</AccountType>
                         <AccountValue>$ {item.balance}</AccountValue>
                         <Buttons>
-                            <Button onClick={() => handleOnClick(item)}><FaRegEdit fontSize='18px' /></Button>
-                            <Button onClick={() => handleOnClick(item)}><FaRegTrashAlt fontSize='18px' /></Button>
+                            <Button onClick={() => handleEdit(item)}><FaRegEdit fontSize='18px' /></Button>
+                            <Button onClick={() => handleDelete(item)}><FaRegTrashAlt fontSize='18px' /></Button>
                         </Buttons>
                     </ListItem>
                 ))}

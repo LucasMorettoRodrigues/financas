@@ -7,6 +7,9 @@ import { formatDate, stringToDate } from '../Utils/dateFunctions'
 import { TPosting } from '../Types/tposting'
 import { useAppSelector } from '../Redux/hooks'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
+import { useAppDispatch } from '../Redux/hooks'
+import { deletePostingById } from '../Redux/postingsSlice'
+import { refreshBalance } from '../Redux/accountsSlice'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -129,6 +132,7 @@ export const Postings = () => {
 
     const accounts = useAppSelector(state => state.accounts.accounts)
     const reduxPostings = useAppSelector(state => state.postings.postings)
+    const dispatch = useAppDispatch()
 
     const [postings, setPostings] = useState<TPosting[]>([])
     const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
@@ -151,9 +155,14 @@ export const Postings = () => {
             : setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
     }
 
-    const handleOnClick = (posting: TPosting) => {
+    const handleCreate = (posting: TPosting) => {
         setPostingToEdit(posting)
         setIsModalOpen(true)
+    }
+
+    const handleDelete = (posting: TPosting) => {
+        dispatch(deletePostingById(posting.id))
+        dispatch(refreshBalance({ account_id: posting.account_id, value: -posting.value }))
     }
 
     return (
@@ -191,8 +200,8 @@ export const Postings = () => {
                                             {posting.value}
                                         </TValue>
                                         <Buttons>
-                                            <Button onClick={() => handleOnClick(posting)}><FaRegEdit fontSize='16px' /></Button>
-                                            <Button onClick={() => handleOnClick(posting)}><FaRegTrashAlt fontSize='16px' /></Button>
+                                            <Button onClick={() => handleCreate(posting)}><FaRegEdit fontSize='16px' /></Button>
+                                            <Button onClick={() => handleDelete(posting)}><FaRegTrashAlt fontSize='16px' /></Button>
                                         </Buttons>
                                     </TableItem>
                                 ))
