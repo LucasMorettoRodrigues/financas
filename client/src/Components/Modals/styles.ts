@@ -3,6 +3,10 @@ import styled from "styled-components"
 export const Title = styled.h4`
     margin-bottom: 15px;
     color: #666;
+
+    @media(max-width: 750px) {
+        margin-bottom: 5px;
+    }
 `
 export const InputLabel = styled.label`
     display: flex;
@@ -10,6 +14,11 @@ export const InputLabel = styled.label`
     font-size: 15px;
     color: #555;
     margin-bottom: 10px;
+
+    @media(max-width: 750px) {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
 `
 export const Input = styled.input`
     width: 100%;
@@ -18,6 +27,10 @@ export const Input = styled.input`
     border: 1px solid #999;
     outline-color: lightblue;
     font-size: 15px;
+
+    @media(max-width: 750px) {
+        padding: 4px 9px;
+    }
 `
 export const Select = styled.select`
     width: 100%;
@@ -27,6 +40,10 @@ export const Select = styled.select`
     background-color: white;
     outline-color: lightblue;
     font-size: 15px;
+
+    @media(max-width: 750px) {
+        padding: 4px 9px;
+    }
 `
 export const Button = styled.button`
     padding: 8px 18px;
@@ -40,4 +57,8 @@ export const Button = styled.button`
     width: 100%;
     cursor: pointer;
     font-size: 15px;
+
+    @media(max-width: 750px) {
+        padding: 4px 9px;
+    }
 `

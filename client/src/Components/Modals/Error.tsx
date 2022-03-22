@@ -10,6 +10,10 @@ const Errors = styled.div`
     border-radius: 5px;
     display: flex;
     background-color: #E8E8E8;
+
+    @media(max-width: 750px) {
+        width: 180px;
+    }
 `
 const ErrorIcon = styled.div`
     width: 50px;
@@ -23,10 +27,20 @@ const ErrorIcon = styled.div`
     font-size: 30px;
     font-weight: bold;
     color: white;
+
+    @media(max-width: 750px) {
+        width: 20px;
+        font-size: 20px;
+        font-weight: 400;
+    }
 `
 
 const ErrorMessages = styled.div`
     padding: 5px;
+
+    @media(max-width: 750px) {
+        padding: 2px;
+    }
 `
 const Msg = styled.p`
     font-size: 12px;
@@ -34,6 +48,11 @@ const Msg = styled.p`
     margin: 2px 10px;
     font-weight: 500;
     font-style: italic;
+
+    @media(max-width: 750px) {
+        font-weight: 100;
+        margin: 2px;
+    }
 `
 
 type Props = {

@@ -10,7 +10,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 40px 10px;
 `
 
 export const Overview = () => {

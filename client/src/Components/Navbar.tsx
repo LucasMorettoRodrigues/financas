@@ -7,8 +7,8 @@ const Container = styled.div`
 `
 const Left = styled.div`
     font-weight: bold;
-    font-size: 40px;
-    color: #111;
+    font-size: 50px;
+    color: #222;
 `
 const Center = styled.div`
     flex: 1;

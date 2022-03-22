@@ -19,7 +19,7 @@ const Container = styled.div<{ isOpen: boolean }>`
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1000;
+    z-index: 100;
     background-color: rgba(0, 0, 0, 0.5);
     transition: all .5s ease;
 `
@@ -34,6 +34,11 @@ const InnerContainer = styled.div`
     top: 5%;
     background-color: white;
     border-radius: 10px;
+
+    @media(max-width: 750px) {
+        width: 90%;
+        padding: 10px;
+    }
 `
 
 type Props = {

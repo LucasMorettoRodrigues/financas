@@ -2,21 +2,21 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Container = styled.div`
-    min-height: 90vh;
     display: flex;
 `
 const Left = styled.div`
     flex: 1;
+    justify-content: center;
 `
 const Right = styled.div`
-    flex: 1;
+    margin-top: -80px;
 `
 const PrimaryText = styled.h2`
-    margin-top: 80px;
+    margin-top: 8%;
     margin-left: 10px;
-    margin-bottom: 20px;
+    margin-right: 20px;
     font-size: 50px;
-    color: #222;
+    color: #333;
 
     >span {
         color: darkgreen
@@ -24,10 +24,10 @@ const PrimaryText = styled.h2`
 `
 const SecondaryText = styled.h3`
     margin-left: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 25px;
     font-weight: 200;
-    color: #444;
+    color: #777;
 `
 const Button = styled.button`
     margin-left: 10px;
@@ -48,8 +48,7 @@ const Button = styled.button`
 `
 const Image = styled.img`
     filter: hue-rotate(175deg);
-    margin-top: -60px;
-    height: 580px;
+    height: 550px;
     width: auto;
 `
 

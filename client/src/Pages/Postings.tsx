@@ -17,7 +17,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 40px 10px;
     min-height: 87vh;
 `
 const Box = styled.div`
@@ -30,6 +30,10 @@ const Box = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media(max-width: 750px) {
+        padding: 30px 10px;
+    }
 `
 const PostingsDiv = styled.div`
     width: 100%;
@@ -63,6 +67,12 @@ const TableItem = styled.div`
     align-items: center;
     gap: 20px;
     margin-bottom: 8px;
+
+    @media(max-width: 452px) {
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
 `
 const TDate = styled.div`
     display: flex;
@@ -75,12 +85,14 @@ const TDate = styled.div`
     color: #999;
     font-weight: 500;
     font-size: 14px;
+    min-width: 35px;
 `
 const TCategory = styled.div`
     flex: 1;
     color: #333;
     font-weight: 500;
     font-size: 15px;
+    min-width: 100px;
     
 `
 const TDescription = styled.div`
@@ -88,6 +100,11 @@ const TDescription = styled.div`
     color: #555;
     font-weight: 100;
     font-size: 19px;
+    min-width: 100px;
+
+    @media(max-width: 452px) {
+        text-align: center;
+    }
 `
 const TableAccount = styled.div`
     flex: 1;
@@ -95,6 +112,10 @@ const TableAccount = styled.div`
     font-weight: 400;
     color: #888;
     font-style: italic;
+
+    @media(max-width: 750px) {
+        display: none;
+    }
 `
 const TValue = styled.div<{ color: string }>`
     width: 100px;
@@ -102,6 +123,12 @@ const TValue = styled.div<{ color: string }>`
     color: ${props => props.color};
     font-size: 18px;
     font-weight: 400;
+
+    @media(max-width: 452px) {
+        min-width: 100px;
+        flex: 1;
+        text-align: center;
+    }
 `
 const Info = styled.div`
     text-align: center;
@@ -113,6 +140,11 @@ const Info = styled.div`
 const Buttons = styled.div`
     display: flex;
     margin-left: 10px;
+
+    @media(max-width: 452px) {
+        flex: 1;
+        justify-content: center;
+    }
 `
 const Button = styled.button`
     display: flex;

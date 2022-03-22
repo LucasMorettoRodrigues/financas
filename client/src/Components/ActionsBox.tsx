@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Modal } from './Modal'
 
 const Container = styled.div`
-    padding: 40px 80px;
+    padding: 50px;
     background-color: white;
     width: 100%;
     border-radius: 10px;
@@ -12,10 +12,16 @@ const Container = styled.div`
     margin-bottom: 40px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
     background: radial-gradient(white, #D7FFC3);
+
+    @media(max-width: 750px) {
+        padding: 10px;
+    }
 `
 const Button = styled.button`
+    margin: 5px;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -35,12 +41,21 @@ const Button = styled.button`
     &:hover {
         background-color: ${props => props.color};
     }
+
+    @media(max-width: 750px) {
+        width: 130px;
+        height: 130px;
+    }
 `
 const ButtonText = styled.p`
     font-size: 16px;
     font-weight: 600;
     margin-top: 10px;
     color: #555;
+
+    @media(max-width: 750px) {
+        font-size: 14px;
+    }
 `
 
 export const ActionsBox = () => {

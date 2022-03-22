@@ -8,18 +8,28 @@ import { deletePostingsByAccountId } from '../Redux/postingsSlice'
 import { deleteAccountById } from '../Redux/accountsSlice'
 
 const Container = styled.div`
-    padding: 40px;
+    padding: 50px;
     background-color: white;
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 0 5px #999;
     margin-bottom: 40px;
     background: radial-gradient(white, #D7FFC3);
+
+    @media(max-width: 750px) {
+        padding: 10px;
+    }
 `
 const Title = styled.h3`
     margin-bottom: 40px;
     color: #444;
     font-size: 18px;
+
+    @media(max-width: 750px) {
+        margin-top: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 `
 const List = styled.ul``
 const ListItem = styled.li`
@@ -31,6 +41,12 @@ const ListItem = styled.li`
     gap: 15px;
     margin-bottom: 10px;
     background-color: white;
+
+    @media(max-width: 750px) {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+    }
 `
 const AccountIcon = styled.div`
     margin-left: 5px;
@@ -51,22 +67,42 @@ const AccountName = styled.h4`
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1.2px;
+
+    @media(max-width: 750px) {
+        flex: 1;
+        min-width: 160px;
+    }
 `
 const AccountType = styled.p`
     flex: 1;
     text-align: center;
     color: #888;
     font-style: italic;
+
+    @media(max-width: 750px) {
+        display: none;
+    }
 `
 const AccountValue = styled.h3`
-    width: 100px;
     color: #2783E5;
     font-weight: 600;
     font-size: 20px;
+    min-width: 100px;
+
+    @media(max-width: 750px) {
+        
+        flex: 1;
+        text-align: center;
+    }
 `
 const Buttons = styled.div`
     margin-right: 20px;
     display: flex;
+
+    @media(max-width: 750px) {
+        flex: 1;
+        justify-content: center;
+    }
 `
 const Button = styled.button`
     display: flex;

@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 0 10px;
     margin: 0 auto;
+    flex-wrap: wrap;
 `
 const Left = styled.div`
     font-weight: 600;
@@ -23,7 +24,9 @@ const Center = styled.div`
     justify-content: center;
     margin: 8x 0;
 `
-const Right = styled.div``
+const Right = styled.div`
+    min-width: 140px;
+`
 
 const List = styled.ul`
     display: flex;
@@ -51,7 +54,7 @@ export const AppNavbar = () => {
                 <Center>
                     <List>
                         <Link to={'/app'}><ListItem>Resumo</ListItem></Link>
-                        <Link to={'/app/accounts'}><ListItem>Contas</ListItem></Link>
+                        {/* <Link to={'/app/accounts'}><ListItem>Contas</ListItem></Link> */}
                         <Link to={'/app/postings'}><ListItem>Lançamentos</ListItem></Link>
                     </List>
                 </Center>

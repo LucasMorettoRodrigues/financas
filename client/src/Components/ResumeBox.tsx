@@ -6,16 +6,20 @@ import { TPosting } from '../Types/tposting'
 import { stringToDate } from '../Utils/dateFunctions'
 
 const Container = styled.div`
-    padding: 40px;
+    padding: 50px;
     background-color: white;
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 0 5px #999;
     margin-bottom: 40px;
     background: radial-gradient(white, #D7FFC3);
+
+    @media(max-width: 750px) {
+        padding: 10px;
+    }
 `
 const Title = styled.h3`
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     color: #555;
     font-size: 18px;
 
@@ -24,14 +28,31 @@ const Title = styled.h3`
         font-size: 26px;
         font-weight: 600;
     }
+
+    @media(max-width: 750px) {
+        margin-bottom: 20px;
+    }
 `
-const Wrapper = styled.div`
+const WrapperTop = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @media(max-width: 750px) {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+`
+const WrapperBottom = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 `
 const InfoBox = styled.div`
     padding: 10px 20px;
+    margin: 10px;
     width: 200px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #999;
@@ -79,13 +100,13 @@ export const ResumeBox = () => {
 
     return (
         <Container>
-            <Wrapper>
+            <WrapperTop>
                 <Title>Hello, John Doe</Title>
                 <Title>
                     Saldo Total: $ <span>{accounts.reduce((sum, account) => sum + account.balance, 0)}</span>
                 </Title>
-            </Wrapper>
-            <Wrapper>
+            </WrapperTop>
+            <WrapperBottom>
                 <InfoBox>
                     <InfoTitle>Receita Mensal</InfoTitle>
                     <InfoValue color='#1BB620'>$ {postings
@@ -112,7 +133,7 @@ export const ResumeBox = () => {
                     </InfoValue>
                 </InfoBox>
                 <Link to='/app/postings'><InfoBox><Button>Lançamentos</Button></InfoBox></Link>
-            </Wrapper>
+            </WrapperBottom>
         </Container>
     )
 }
