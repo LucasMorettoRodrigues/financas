@@ -83,14 +83,12 @@ export const AccountsBox = () => {
             <List>
                 {accounts.map(item => (
                     <ListItem key={item.id}>
-                        {accountToEdit === item &&
-                            <Modal
-                                isOpen={isModalOpen}
-                                closeModal={() => setIsModalOpen(false)}
-                                modal='editAccount'
-                                data={item}
-                            />
-                        }
+                        <Modal
+                            isOpen={accountToEdit === item ? isModalOpen : false}
+                            closeModal={() => setIsModalOpen(false)}
+                            modal='editAccount'
+                            data={item}
+                        />
                         <AccountIcon>{item.name[0]}</AccountIcon>
                         <AccountName>{item.name}</AccountName>
                         <AccountType>{item.type}</AccountType>

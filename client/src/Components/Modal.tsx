@@ -6,6 +6,8 @@ import { Account } from "./Modals/Account"
 import { EditAccount } from "./Modals/EditAccount"
 import { EditExpense } from "./Modals/EditExpense"
 import ReactDom from 'react-dom'
+import { EditIncome } from "./Modals/EditIncome"
+import { EditTransfer } from "./Modals/EditTransfer"
 
 const Container = styled.div<{ isOpen: boolean }>`
     visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
@@ -56,6 +58,8 @@ export const Modal = ({ isOpen, closeModal, modal, data }: Props) => {
                     {modal === 'account' && <Account closeModal={closeModal} />}
                     {modal === 'editAccount' && <EditAccount closeModal={closeModal} data={data} />}
                     {modal === 'editExpense' && <EditExpense closeModal={closeModal} data={data} />}
+                    {modal === 'editIncome' && <EditIncome closeModal={closeModal} data={data} />}
+                    {modal === 'editTransferency' && <EditTransfer closeModal={closeModal} data={data} />}
                 </InnerContainer>
             </Container>
         </>,

@@ -12,10 +12,16 @@ export const postingSlice = createSlice({
             state.postings = [...state.postings, action.payload]
         },
         editPosting: (state, action: PayloadAction<TPosting1>) => {
-            state.postings = state.postings.map((item) => (item.id === action.payload.id
-                ? action.payload
-                : item
-            ))
+            state.postings =
+                action.payload.type === 'Transferency'
+                    ? state.postings.map((item) => (item.id === action.payload.id && item.category === action.payload.category
+                        ? action.payload
+                        : item
+                    ))
+                    : state.postings.map((item) => (item.id === action.payload.id
+                        ? action.payload
+                        : item
+                    ))
         }
     }
 })

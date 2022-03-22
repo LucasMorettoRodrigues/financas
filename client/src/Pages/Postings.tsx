@@ -154,20 +154,23 @@ export const Postings = () => {
                             </ContainerData>
                             {postings.length > 0
                                 ?
-                                filteredPostings.map(posting => (
-                                    <TableItem key={posting.id}>
-                                        {postingToEdit === posting &&
-                                            <Modal
-                                                isOpen={isModalOpen}
-                                                closeModal={() => setIsModalOpen(false)}
-                                                modal={`edit${posting.type}`}
-                                                data={posting}
-                                            />
-                                        }
+                                filteredPostings.map((posting, index) => (
+                                    <TableItem key={index}>
+                                        <Modal
+                                            isOpen={postingToEdit === posting ? isModalOpen : false}
+                                            closeModal={() => setIsModalOpen(false)}
+                                            modal={`edit${posting.type}`}
+                                            data={posting}
+                                        />
                                         <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
                                         <TCategory>{posting.category}</TCategory>
                                         <TDescription>{posting.description}</TDescription>
-                                        <TableAccount>{accounts.find(account => account.id === posting.account_id)!.name}</TableAccount>
+                                        <TableAccount>
+                                            {posting.category === "Transf. Saída"
+                                                ? accounts.find(account => account.id === posting.from_account_id!)!.name
+                                                : accounts.find(account => account.id === posting.account_id)!.name
+                                            }
+                                        </TableAccount>
                                         <TValue color={posting.value < 0 ? 'red' : 'green'}>
                                             {posting.value}
                                         </TValue>

@@ -2,9 +2,9 @@ import { useState } from "react"
 import styled from "styled-components"
 import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks"
-import { addPosting } from "../../Redux/postingsSlice"
-import { TPosting1 } from "../../Types/tposting"
-import { dateNow } from "../../Utils/dateFunctions"
+import { editPosting } from "../../Redux/postingsSlice"
+import { TPosting, TPosting1 } from "../../Types/tposting"
+import { dateToString } from "../../Utils/dateFunctions"
 import { Error } from "./Error"
 
 const Title = styled.h4`
@@ -49,18 +49,19 @@ const Button = styled.button`
 
 type Props = {
     closeModal: () => void,
+    data: TPosting
 }
 
-export const Transfer = ({ closeModal }: Props) => {
+export const EditTransfer = ({ closeModal, data }: Props) => {
 
     const dispatch = useAppDispatch()
     const accounts = useAppSelector(state => state.accounts.accounts)
 
-    const [description, setDescription] = useState('')
-    const [value, setValue] = useState(0)
-    const [date, setDate] = useState(dateNow())
-    const [fromAccount, setFromAccount] = useState('')
-    const [toAccount, setToAccount] = useState('')
+    const [description, setDescription] = useState(data.description)
+    const [value, setValue] = useState(Math.abs(data.value))
+    const [date, setDate] = useState(dateToString(data.date))
+    const [fromAccount, setFromAccount] = useState(data.from_account_id!)
+    const [toAccount, setToAccount] = useState(data.account_id)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -71,7 +72,7 @@ export const Transfer = ({ closeModal }: Props) => {
         if (value === 0) err.push('Valor deve ser maior que 0.')
         if (isNaN(value)) err.push('Forneça o valor.')
         if (toAccount.length < 1) err.push('Selecione a conta de entrada.')
-        if (fromAccount.length < 1) err.push('Selecione a conta de saída.')
+        if (fromAccount!.length < 1) err.push('Selecione a conta de saída.')
         if (fromAccount === toAccount && fromAccount.length > 0) err.push('Conta de saída igual a conta de entrada.')
         if (accounts.find(x => x.id === fromAccount) &&
             accounts.find(x => x.id === fromAccount)?.balance! < value) err.push('Saldo insuficiente.')
@@ -79,49 +80,42 @@ export const Transfer = ({ closeModal }: Props) => {
         setErrors(err)
         if (err.length > 0) return
 
-        const newPostingOut: TPosting1 = {
-            id: '0006',
+        const editedPostingOut: TPosting1 = {
+            id: data.id,
             description: description,
             category: 'Transf. Saída',
             date: date,
             value: -value,
-            type: 'Transferency',
+            type: data.type,
             account_id: toAccount,
-            user_id: '0001',
+            user_id: data.user_id,
             from_account_id: fromAccount
         }
 
-        const newPostingIn: TPosting1 = {
-            id: '0006',
+        const editedPostingIn: TPosting1 = {
+            id: data.id,
             description: description,
             category: 'Transf. Entrada',
             date: date,
             value: value,
-            type: 'Transferency',
+            type: data.type,
             account_id: toAccount,
-            user_id: '0001',
+            user_id: data.user_id,
             from_account_id: fromAccount
         }
 
-        dispatch(addPosting(newPostingOut))
-        dispatch(addPosting(newPostingIn))
+        dispatch(editPosting(editedPostingOut))
+        dispatch(editPosting(editedPostingIn))
+        dispatch(refreshBalance({ account_id: data.account_id, value: -Math.abs(data.value) }))
         dispatch(refreshBalance({ account_id: toAccount, value: value }))
+        dispatch(refreshBalance({ account_id: data.from_account_id, value: Math.abs(data.value) }))
         dispatch(refreshBalance({ account_id: fromAccount, value: -value }))
         closeModal()
-        clearFields()
-    }
-
-    const clearFields = () => {
-        setDescription('')
-        setValue(0)
-        setDate(dateNow())
-        setToAccount('')
-        setFromAccount('')
     }
 
     return (
         <>
-            <Title>Nova transferência</Title>
+            <Title>Editar transferência</Title>
             {errors.length > 0 && <Error errors={errors} />}
             {console.log(value)
             }
@@ -135,7 +129,7 @@ export const Transfer = ({ closeModal }: Props) => {
             </InputLabel>
             <InputLabel>
                 Data
-                <Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></Input>
+                <Input onChange={(e) => setDate(e.target.value)} value={date} type='date'></Input>
             </InputLabel>
             <InputLabel>
                 Saiu da conta
