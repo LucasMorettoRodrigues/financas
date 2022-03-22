@@ -10,11 +10,17 @@ export const postingSlice = createSlice({
     reducers: {
         addPosting: (state, action: PayloadAction<TPosting1>) => {
             state.postings = [...state.postings, action.payload]
+        },
+        editPosting: (state, action: PayloadAction<TPosting1>) => {
+            state.postings = state.postings.map((item) => (item.id === action.payload.id
+                ? action.payload
+                : item
+            ))
         }
     }
 })
 
-export const { addPosting } = postingSlice.actions
+export const { addPosting, editPosting } = postingSlice.actions
 
 // // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

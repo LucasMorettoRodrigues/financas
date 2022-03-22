@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useAppSelector } from '../Redux/hooks'
+import { TAccount } from '../Types/taccount'
+import { Modal } from './Modal'
 
 const Container = styled.div`
     padding: 40px;
@@ -60,10 +63,19 @@ const AccountValue = styled.h3`
     font-weight: 500;
     letter-spacing: 0px;
 `
+const Button = styled.button``
 
 export const AccountsBox = () => {
 
     const accounts = useAppSelector(state => state.accounts.accounts)
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [accountToEdit, setAccountToEdit] = useState<TAccount | null>(null)
+
+    const handleOnClick = (account: TAccount) => {
+        setAccountToEdit(account)
+        setIsModalOpen(true)
+    }
 
     return (
         <Container>
@@ -71,10 +83,19 @@ export const AccountsBox = () => {
             <List>
                 {accounts.map(item => (
                     <ListItem key={item.id}>
+                        {accountToEdit === item &&
+                            <Modal
+                                isOpen={isModalOpen}
+                                closeModal={() => setIsModalOpen(false)}
+                                modal='editAccount'
+                                data={item}
+                            />
+                        }
                         <AccountIcon>{item.name[0]}</AccountIcon>
                         <AccountName>{item.name}</AccountName>
                         <AccountType>{item.type}</AccountType>
                         <AccountValue>$ {item.balance}</AccountValue>
+                        <Button onClick={() => handleOnClick(item)}>Edit</Button>
                     </ListItem>
                 ))}
             </List>

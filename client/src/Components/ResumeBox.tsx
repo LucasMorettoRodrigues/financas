@@ -95,24 +95,24 @@ export const ResumeBox = () => {
                 <InfoBox>
                     <InfoTitle>Receita Mensal</InfoTitle>
                     <InfoValue color='green'>$ {postings
-                        .filter(item => item.type === 'income')
+                        .filter(item => item.type === 'Income')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Despesa Mensal</InfoTitle>
                     <InfoValue color='red'>$ {postings
-                        .filter(item => item.type === 'expense')
+                        .filter(item => item.type === 'Expense')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Balanço Mensal</InfoTitle>
                     <InfoValue color='#2783E5'>$ {postings
-                        .filter(item => item.type === 'income')
+                        .filter(item => item.type === 'Income')
                         .reduce((sum, posting) => sum + posting.value, 0) -
                         postings
-                            .filter(item => item.type === 'expense')
+                            .filter(item => item.type === 'Expense')
                             .reduce((sum, posting) => sum + posting.value, 0)
                     }
                     </InfoValue>

@@ -3,6 +3,9 @@ import { Expense } from "./Modals/Expense"
 import { Income } from "./Modals/Income"
 import { Transfer } from "./Modals/Transfer"
 import { Account } from "./Modals/Account"
+import { EditAccount } from "./Modals/EditAccount"
+import { EditExpense } from "./Modals/EditExpense"
+import ReactDom from 'react-dom'
 
 const Container = styled.div<{ isOpen: boolean }>`
     visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
@@ -14,7 +17,7 @@ const Container = styled.div<{ isOpen: boolean }>`
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10;
+    z-index: 1000;
     background-color: rgba(0, 0, 0, 0.5);
     transition: all .5s ease;
 `
@@ -34,11 +37,15 @@ const InnerContainer = styled.div`
 type Props = {
     isOpen: boolean
     closeModal: () => void,
-    modal: string
+    modal: string,
+    data?: any
 }
 
-export const Modal = ({ isOpen, closeModal, modal }: Props) => {
-    return (
+export const Modal = ({ isOpen, closeModal, modal, data }: Props) => {
+
+    const portal = document.getElementById("portal") as HTMLElement;
+
+    return ReactDom.createPortal(
         <>
             <Container isOpen={isOpen}>
                 <Aux onClick={closeModal}></Aux>
@@ -47,9 +54,11 @@ export const Modal = ({ isOpen, closeModal, modal }: Props) => {
                     {modal === 'expense' && <Expense closeModal={closeModal} />}
                     {modal === 'transfer' && <Transfer closeModal={closeModal} />}
                     {modal === 'account' && <Account closeModal={closeModal} />}
+                    {modal === 'editAccount' && <EditAccount closeModal={closeModal} data={data} />}
+                    {modal === 'editExpense' && <EditExpense closeModal={closeModal} data={data} />}
                 </InnerContainer>
             </Container>
-        </>
-
+        </>,
+        portal
     )
 }

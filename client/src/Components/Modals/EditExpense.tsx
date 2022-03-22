@@ -2,9 +2,9 @@ import { useState } from "react"
 import styled from "styled-components"
 import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
-import { addPosting } from "../../Redux/postingsSlice"
-import { TPosting1 } from "../../Types/tposting"
-import { dateNow } from "../../Utils/dateFunctions"
+import { editPosting } from "../../Redux/postingsSlice"
+import { TPosting, TPosting1 } from "../../Types/tposting"
+import { dateToString } from "../../Utils/dateFunctions"
 import { Error } from "./Error"
 
 const Title = styled.h4`
@@ -49,18 +49,19 @@ const Button = styled.button`
 
 type Props = {
     closeModal: () => void,
+    data: TPosting
 }
 
-export const Expense = ({ closeModal }: Props) => {
+export const EditExpense = ({ closeModal, data }: Props) => {
 
     const dispatch = useAppDispatch()
     const accounts = useAppSelector(state => state.accounts.accounts)
 
-    const [description, setDescription] = useState('')
-    const [value, setValue] = useState(0)
-    const [date, setDate] = useState(dateNow())
-    const [accountId, setAccountId] = useState('')
-    const [category, setCategory] = useState('')
+    const [description, setDescription] = useState(data.description)
+    const [value, setValue] = useState(-data.value)
+    const [date, setDate] = useState(dateToString(data.date))
+    const [accountId, setAccountId] = useState(data.account_id)
+    const [category, setCategory] = useState(data.category)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -78,34 +79,27 @@ export const Expense = ({ closeModal }: Props) => {
         setErrors(err)
         if (err.length > 0) return
 
-        const newPosting: TPosting1 = {
-            id: '0006',
+        const editedPosting: TPosting1 = {
+            id: data.id,
             description: description,
             category: category,
             date: date,
             value: -value,
-            type: 'Expense',
+            type: data.type,
             account_id: accountId,
-            user_id: '0001'
+            user_id: data.user_id
         }
 
-        dispatch(addPosting(newPosting))
-        dispatch(refreshBalance({ account_id: '0001', value: -value }))
-        closeModal()
-        clearFields()
-    }
+        dispatch(editPosting(editedPosting))
+        dispatch(refreshBalance({ account_id: data.account_id, value: -data.value }))
+        dispatch(refreshBalance({ account_id: accountId, value: - value }))
 
-    const clearFields = () => {
-        setDescription('')
-        setValue(0)
-        setDate(dateNow())
-        setAccountId('')
-        setCategory('')
+        closeModal()
     }
 
     return (
         <>
-            <Title>Nova despesa</Title>
+            <Title>Editar Despesa</Title>
             {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
                 Descrição
@@ -117,7 +111,7 @@ export const Expense = ({ closeModal }: Props) => {
             </InputLabel>
             <InputLabel>
                 Data
-                <Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></Input>
+                <Input onChange={(e) => setDate(e.target.value)} value={date} type='date'></Input>
             </InputLabel>
             <InputLabel>
                 Conta

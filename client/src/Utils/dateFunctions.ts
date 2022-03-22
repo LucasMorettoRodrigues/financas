@@ -11,6 +11,8 @@ export const stringToDate = (date: string): Date => {
     return new Date(parseInt(year), parseInt(month), parseInt(day))
 }
 
+export const dateToString = (date: Date): string => `${date.getFullYear()}-${addZeroToDate(date.getMonth())}-${addZeroToDate(date.getDate())}`
+
 export const dateNow = (): string => {
     const now = new Date()
     return `${now.getFullYear()}-${addZeroToDate(now.getMonth() + 1)}-${addZeroToDate(now.getDate())}`

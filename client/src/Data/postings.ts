@@ -5,7 +5,7 @@ export const postings = [
         category: "Alimentação",
         date: "2022-3-19",
         value: -60,
-        type: "expense",
+        type: "Expense",
         account_id: "0001",
         user_id: "0001"
     },
@@ -15,7 +15,7 @@ export const postings = [
         category: "Salário",
         date: "2022-3-19",
         value: 4000,
-        type: "income",
+        type: "Income",
         account_id: "0001",
         user_id: "0001"
     },
@@ -25,7 +25,7 @@ export const postings = [
         category: "Alimentação",
         date: "2022-3-19",
         value: -80,
-        type: "expense",
+        type: "Expense",
         account_id: "0002",
         user_id: "0001"
     },
@@ -35,7 +35,7 @@ export const postings = [
         category: "Combustível",
         date: "2022-3-19",
         value: -100,
-        type: "expense",
+        type: "Expense",
         account_id: "0002",
         user_id: "0001"
     },
@@ -45,7 +45,7 @@ export const postings = [
         category: "Recarga",
         date: "2022-3-19",
         value: -40,
-        type: "expense",
+        type: "Expense",
         account_id: "0001",
         user_id: "0001"
     },

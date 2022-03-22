@@ -1,6 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
-import { addAccount } from "../../Redux/accountsSlice"
+import { editAccount } from "../../Redux/accountsSlice"
 import { useAppDispatch } from "../../Redux/hooks"
 import { TAccount } from "../../Types/taccount"
 import { Error } from "./Error"
@@ -39,15 +39,16 @@ const Button = styled.button`
 
 type Props = {
     closeModal: () => void
+    data: any
 }
 
-export const Account = ({ closeModal }: Props) => {
+export const EditAccount = ({ closeModal, data }: Props) => {
 
     const dispatch = useAppDispatch()
 
-    const [name, setName] = useState('')
-    const [type, setType] = useState('')
-    const [initialBalance, setInitialBalance] = useState(0)
+    const [name, setName] = useState(data.name)
+    const [type, setType] = useState(data.type)
+    const [balance, setBalance] = useState(data.balance)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -56,28 +57,21 @@ export const Account = ({ closeModal }: Props) => {
 
         if (name.length < 1) err.push('Forneça o nome da conta.')
         if (type.length < 1) err.push('Forneça o tipo da conta.')
-        if (isNaN(initialBalance)) err.push('Forneça o valor.')
+        if (isNaN(balance)) err.push('Forneça o valor.')
 
         setErrors(err)
         if (err.length > 0) return
 
         const newAccount: TAccount = {
-            id: '0005',
+            id: data.id,
             name: name,
             type: type,
-            balance: initialBalance,
-            user_id: '0001'
+            balance: balance,
+            user_id: data.user_id
         }
 
-        dispatch(addAccount(newAccount))
-        clearFields()
+        dispatch(editAccount(newAccount))
         closeModal()
-    }
-
-    const clearFields = () => {
-        setName('')
-        setType('')
-        setInitialBalance(0)
     }
 
     return (
@@ -85,16 +79,16 @@ export const Account = ({ closeModal }: Props) => {
             <Title>Nova conta</Title>
             {errors.length > 0 && <Error errors={errors} />}
             <InputLabel>
-                Nome da nova conta
+                Nome da conta
                 <Input onChange={(e) => setName(e.target.value)} value={name} type='text'></Input>
             </InputLabel>
             <InputLabel>
-                Tipo da nova conta
+                Tipo da conta
                 <Input onChange={(e) => setType(e.target.value)} value={type} type='text'></Input>
             </InputLabel>
             <InputLabel>
-                Saldo Initial
-                <Input onChange={(e) => setInitialBalance(parseFloat(e.target.value))} value={initialBalance} min={0} type='number'></Input>
+                Saldo
+                <Input onChange={(e) => setBalance(parseFloat(e.target.value))} value={balance} min={0} type='number'></Input>
             </InputLabel>
             <Button onClick={handleOnClick}>Continuar</Button>
         </>

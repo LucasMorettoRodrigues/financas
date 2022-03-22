@@ -107,6 +107,7 @@ const Info = styled.div`
     color: #888;
     margin-bottom: 10px;
 `
+const Button = styled.button``
 
 export const Postings = () => {
 
@@ -117,7 +118,7 @@ export const Postings = () => {
     const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
     const [currentDate, setCurrentDate] = useState(new Date())
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [currentModal, setCurrentModal] = useState("")
+    const [postingToEdit, setPostingToEdit] = useState<TPosting | null>(null)
 
     useEffect(() => {
         // Set Postings with Date type
@@ -134,17 +135,17 @@ export const Postings = () => {
             : setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
     }
 
+    const handleOnClick = (posting: TPosting) => {
+        setPostingToEdit(posting)
+        setIsModalOpen(true)
+    }
+
     return (
         <>
             <AppNavbar />
             <Container>
                 <Wrapper>
                     <Box>
-                        <Modal
-                            isOpen={isModalOpen}
-                            closeModal={() => setIsModalOpen(false)}
-                            modal={currentModal}
-                        />
                         <PostingsDiv>
                             <ContainerData>
                                 <Arrow onClick={() => handleChangeDate('prev')}><BsChevronLeft /></Arrow>
@@ -155,6 +156,14 @@ export const Postings = () => {
                                 ?
                                 filteredPostings.map(posting => (
                                     <TableItem key={posting.id}>
+                                        {postingToEdit === posting &&
+                                            <Modal
+                                                isOpen={isModalOpen}
+                                                closeModal={() => setIsModalOpen(false)}
+                                                modal={`edit${posting.type}`}
+                                                data={posting}
+                                            />
+                                        }
                                         <TDate>{posting.date.getDate() < 10 && '0'}{posting.date.getDate()}</TDate>
                                         <TCategory>{posting.category}</TCategory>
                                         <TDescription>{posting.description}</TDescription>
@@ -162,6 +171,7 @@ export const Postings = () => {
                                         <TValue color={posting.value < 0 ? 'red' : 'green'}>
                                             {posting.value}
                                         </TValue>
+                                        <Button onClick={() => handleOnClick(posting)}>Edit</Button>
                                     </TableItem>
                                 ))
                                 : <Info>Não há lançamentos cadastrados para este mês.</Info>
