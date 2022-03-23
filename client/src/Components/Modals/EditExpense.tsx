@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { categories } from "../../Data/categories"
 import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
 import { editPosting } from "../../Redux/postingsSlice"
@@ -63,7 +64,7 @@ export const EditExpense = ({ closeModal, data }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor
@@ -84,8 +85,7 @@ export const EditExpense = ({ closeModal, data }: Props) => {
                 Categoria
                 <S.Select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {categories.map((item) => item.type === 'Expense' && <option>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

@@ -5,6 +5,7 @@ import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
 import { dateNow } from "../../Utils/dateFunctions"
 import { Error } from "./Error"
+import { categories } from "../../Data/categories"
 import * as S from './styles'
 
 type Props = {
@@ -50,7 +51,7 @@ export const Expense = ({ closeModal }: Props) => {
         }
 
         dispatch(addPosting(newPosting))
-        dispatch(refreshBalance({ account_id: '0001', value: -value }))
+        dispatch(refreshBalance({ account_id: accountId, value: -value }))
         closeModal()
         clearFields()
     }
@@ -69,7 +70,7 @@ export const Expense = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor
@@ -90,8 +91,7 @@ export const Expense = ({ closeModal }: Props) => {
                 Categoria
                 <S.Select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {categories.map((item) => item.type === 'Expense' && <option>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

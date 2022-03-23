@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { categories } from "../../Data/categories"
 import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks"
 import { addPosting } from "../../Redux/postingsSlice"
@@ -48,7 +49,7 @@ export const Income = ({ closeModal }: Props) => {
         }
 
         dispatch(addPosting(newPosting))
-        dispatch(refreshBalance({ account_id: '0001', value: value }))
+        dispatch(refreshBalance({ account_id: account, value: value }))
         closeModal()
         clearFields()
     }
@@ -67,7 +68,7 @@ export const Income = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor
@@ -88,8 +89,7 @@ export const Income = ({ closeModal }: Props) => {
                 Categoria
                 <S.Select onChange={(e) => setCategory(e.target.value)} value={category}>
                     <option></option>
-                    <option>aaa</option>
-                    <option>bbb</option>
+                    {categories.map((item) => item.type === 'Income' && <option>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

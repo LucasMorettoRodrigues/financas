@@ -48,11 +48,11 @@ export const EditAccount = ({ closeModal, data }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Nome da conta
-                <S.Input onChange={(e) => setName(e.target.value)} value={name} type='text'></S.Input>
+                <S.Input maxLength={15} onChange={(e) => setName(e.target.value)} value={name} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Tipo da conta
-                <S.Input onChange={(e) => setType(e.target.value)} value={type} type='text'></S.Input>
+                <S.Input maxLength={15} onChange={(e) => setType(e.target.value)} value={type} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Saldo

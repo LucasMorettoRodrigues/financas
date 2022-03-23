@@ -81,7 +81,7 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
             }
             <S.InputLabel>
                 Descrição
-                <S.Input onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor

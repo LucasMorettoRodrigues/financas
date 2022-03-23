@@ -92,16 +92,22 @@ export const ResumeBox = () => {
     const reduxPostings = useAppSelector(state => state.postings.postings)
 
     const [postings, setPostings] = useState<TPosting[]>([])
+    const [filteredPostings, setFilteredPostings] = useState<TPosting[]>([])
+
 
     useEffect(() => {
         // Set Postings with Date type
         setPostings(reduxPostings.map((item) => (Object.assign({}, item, { date: stringToDate(item.date) }))))
     }, [reduxPostings])
 
+    useEffect(() => {
+        setFilteredPostings(postings.filter(item => item.date.getMonth() === new Date().getMonth() + 1))
+    }, [postings])
+
     return (
         <Container>
             <WrapperTop>
-                <Title>Hello, John Doe</Title>
+                <Title>Olá, Visitante</Title>
                 <Title>
                     Saldo Total: $ <span>{accounts.reduce((sum, account) => sum + account.balance, 0)}</span>
                 </Title>
@@ -109,24 +115,24 @@ export const ResumeBox = () => {
             <WrapperBottom>
                 <InfoBox>
                     <InfoTitle>Receita Mensal</InfoTitle>
-                    <InfoValue color='#1BB620'>$ {postings
+                    <InfoValue color='#1BB620'>$ {filteredPostings
                         .filter(item => item.type === 'Income')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Despesa Mensal</InfoTitle>
-                    <InfoValue color='#FF2D2D'>$ {postings
+                    <InfoValue color='#FF2D2D'>$ {filteredPostings
                         .filter(item => item.type === 'Expense')
                         .reduce((sum, posting) => sum + posting.value, 0)}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Balanço Mensal</InfoTitle>
-                    <InfoValue color='#2783E5'>$ {postings
+                    <InfoValue color='#2783E5'>$ {filteredPostings
                         .filter(item => item.type === 'Income')
-                        .reduce((sum, posting) => sum + posting.value, 0) -
-                        postings
+                        .reduce((sum, posting) => sum + posting.value, 0) +
+                        filteredPostings
                             .filter(item => item.type === 'Expense')
                             .reduce((sum, posting) => sum + posting.value, 0)
                     }
