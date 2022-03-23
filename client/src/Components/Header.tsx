@@ -3,13 +3,24 @@ import styled from "styled-components"
 
 const Container = styled.div`
     display: flex;
+    min-height: 80vh;
 `
 const Left = styled.div`
     flex: 1;
     justify-content: center;
+
+    @media(max-width: 920px) {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 `
 const Right = styled.div`
     margin-top: -80px;
+
+    @media(max-width: 920px) {
+        display: none;
+    }
 `
 const PrimaryText = styled.h2`
     margin-top: 8%;
@@ -21,6 +32,11 @@ const PrimaryText = styled.h2`
     >span {
         color: darkgreen
     }
+
+    @media(max-width: 920px) {
+        margin: 0;
+        font-size: 40px;
+    }
 `
 const SecondaryText = styled.h3`
     margin-left: 10px;
@@ -28,6 +44,10 @@ const SecondaryText = styled.h3`
     font-size: 25px;
     font-weight: 200;
     color: #777;
+
+    @media(max-width: 430px) {
+        font-size: 20px
+    }
 `
 const Button = styled.button`
     margin-left: 10px;
@@ -44,6 +64,13 @@ const Button = styled.button`
     &:hover {
         background-color: lightgreen;
         color: darkgreen;
+    }
+
+    @media(max-width: 430px) {
+        font-size: 20px;
+        margin: 0 auto;
+        width: 90%;
+        padding: 15px 0;
     }
 `
 const Image = styled.img`
