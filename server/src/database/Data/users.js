@@ -1,5 +1,9 @@
-export const users = [
+const users = [
     {
-        name: "Visitante"
+        name: "Visitante",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     }
 ]
+
+module.exports = users

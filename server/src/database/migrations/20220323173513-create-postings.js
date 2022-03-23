@@ -9,7 +9,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      name: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -17,7 +17,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      balance: {
+      date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      value: {
         type: Sequelize.DECIMAL,
         allowNull: false
       },

@@ -1,52 +1,59 @@
-export const postings = [
+const postings = [
     {
-        id: "0001",
         description: "Burger King",
-        category: "Alimentação",
-        date: "2022-3-1",
-        value: -60,
+        category_id: 1,
+        date: new Date().toISOString(),
+        value: -60.00,
         type: "Expense",
-        account_id: "0001",
-        user_id: "0001"
+        account_id: 1,
+        user_id: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
-        id: "0002",
         description: "Salário",
-        category: "Salário",
-        date: "2022-3-2",
-        value: 4000,
+        category_id: 2,
+        date: new Date().toISOString(),
+        value: 4000.00,
         type: "Income",
-        account_id: "0001",
-        user_id: "0001"
+        account_id: 1,
+        user_id: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
-        id: "0003",
         description: "Pizza",
-        category: "Alimentação",
-        date: "2022-3-4",
-        value: -80,
+        category_id: 3,
+        date: new Date().toISOString(),
+        value: -80.00,
         type: "Expense",
-        account_id: "0002",
-        user_id: "0001"
+        account_id: 2,
+        user_id: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
-        id: "0004",
         description: "Etanol",
-        category: "Combustível",
-        date: "2022-3-12",
-        value: -100,
+        category_id: 4,
+        date: new Date().toISOString(),
+        value: -100.00,
         type: "Expense",
-        account_id: "0002",
-        user_id: "0001"
+        account_id: 2,
+        user_id: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
-        id: "0005",
         description: "Celular",
-        category: "Recarga",
-        date: "2022-3-24",
-        value: -40,
+        category_id: 5,
+        date: new Date().toISOString(),
+        value: -40.00,
         type: "Expense",
-        account_id: "0001",
-        user_id: "0001"
+        account_id: 1,
+        user_id: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
 ]
+
+module.exports = postings

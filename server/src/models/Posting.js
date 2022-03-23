@@ -7,7 +7,7 @@ const User = require('./User');
 class Posting extends Model { }
 
 Posting.init({
-    name: {
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -15,7 +15,11 @@ Posting.init({
         type: Sequelize.STRING,
         allowNull: false
     },
-    balance: {
+    date: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    value: {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
