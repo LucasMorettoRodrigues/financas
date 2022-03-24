@@ -5,6 +5,7 @@ import { Overview } from "./Pages/Overview";
 import { Postings } from "./Pages/Postings";
 import { useAppDispatch } from "./Redux/hooks";
 import { getAccounts } from "./Redux/accountsSlice";
+import { getPostings } from "./Redux/postingsSlice";
 
 function App() {
 
@@ -12,6 +13,10 @@ function App() {
 
   useEffect(() => {
     dispatch(getAccounts())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getPostings())
   }, [dispatch])
 
   return (
