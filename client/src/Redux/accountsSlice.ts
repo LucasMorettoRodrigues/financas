@@ -1,12 +1,27 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TAccount } from '../Types/taccount'
-import { accounts } from '../Data/accounts'
+import axios from 'axios'
+
+export const getAccounts = createAsyncThunk(
+    'accounts/getAccounts',
+    async () => {
+        const data = await axios.get('http://localhost:5000/api/v1/accounts')
+        const accounts = data.data.map((acc: { balance: string }) => (Object.assign({}, acc, { balance: parseFloat(acc.balance) })))
+        return accounts
+    }
+)
+
+type State = {
+    accounts: TAccount[],
+    status: string | null
+}
 
 export const accountSlice = createSlice({
     name: 'accounts',
     initialState: {
-        accounts: accounts
-    },
+        accounts: [],
+        status: null
+    } as State,
     reducers: {
         addAccount: (state, action: PayloadAction<TAccount>) => {
             state.accounts = [...state.accounts, action.payload]
@@ -23,10 +38,22 @@ export const accountSlice = createSlice({
                 : account
             ))
         },
-        deleteAccountById: (state, action: PayloadAction<string>) => {
+        deleteAccountById: (state, action: PayloadAction<number>) => {
             state.accounts = state.accounts.filter((account) => account.id !== action.payload)
         }
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getAccounts.pending, (state) => {
+            state.status = 'loading'
+        })
+        builder.addCase(getAccounts.fulfilled, (state, action) => {
+            state.status = 'success'
+            state.accounts = action.payload
+        })
+        builder.addCase(getAccounts.rejected, (state) => {
+            state.status = 'failed'
+        })
+    },
 })
 
 export const { addAccount, refreshBalance, editAccount, deleteAccountById } = accountSlice.actions

@@ -7,7 +7,7 @@ import * as S from './styles'
 
 type Props = {
     closeModal: () => void
-    data: any
+    data: any,
 }
 
 export const EditAccount = ({ closeModal, data }: Props) => {

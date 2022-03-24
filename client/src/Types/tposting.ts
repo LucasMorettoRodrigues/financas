@@ -1,23 +1,23 @@
 export type TPosting = {
-    id: string,
+    id: number,
     description: string,
     category: string,
     date: Date,
     value: number,
     type: string,
-    account_id: string,
-    user_id: string
-    from_account_id?: string
+    account_id: number,
+    user_id: number
+    from_account_id?: number
 }
 
 export type TPosting1 = {
-    id: string,
+    id: number,
     description: string,
     category: string,
     date: string,
     value: number,
     type: string,
-    account_id: string,
-    user_id: string,
-    from_account_id?: string
+    account_id: number,
+    user_id: number,
+    from_account_id?: number
 }

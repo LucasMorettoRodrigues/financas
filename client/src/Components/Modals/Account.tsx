@@ -30,11 +30,11 @@ export const Account = ({ closeModal }: Props) => {
         if (err.length > 0) return
 
         const newAccount: TAccount = {
-            id: '0005',
+            id: 5,
             name: name,
             type: type,
             balance: initialBalance,
-            user_id: '0001'
+            user_id: 1
         }
 
         dispatch(addAccount(newAccount))

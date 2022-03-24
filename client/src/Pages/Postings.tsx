@@ -162,8 +162,8 @@ const Button = styled.button`
 
 export const Postings = () => {
 
-    const accounts = useAppSelector(state => state.accounts.accounts)
     const reduxPostings = useAppSelector(state => state.postings.postings)
+    const accounts = useAppSelector(state => state.accounts.accounts)
     const dispatch = useAppDispatch()
 
     const [postings, setPostings] = useState<TPosting[]>([])

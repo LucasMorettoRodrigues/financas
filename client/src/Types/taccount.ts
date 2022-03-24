@@ -1,7 +1,7 @@
 export type TAccount = {
-    id: string,
+    id: number,
     name: string,
     type: string,
     balance: number,
-    user_id: string
+    user_id: number
 }

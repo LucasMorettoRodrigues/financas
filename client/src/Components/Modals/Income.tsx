@@ -20,7 +20,7 @@ export const Income = ({ closeModal }: Props) => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
     const [date, setDate] = useState(dateNow())
-    const [account, setAccount] = useState('')
+    const [account, setAccount] = useState<number | undefined>(undefined)
     const [category, setCategory] = useState('')
     const [errors, setErrors] = useState<string[]>([])
 
@@ -32,20 +32,20 @@ export const Income = ({ closeModal }: Props) => {
         if (category.length < 1) err.push('Seleciona uma categoria.')
         if (value === 0) err.push('Valor deve ser maior que 0.')
         if (isNaN(value)) err.push('Forneça o valor.')
-        if (account.length < 1) err.push('Selecione uma conta.')
+        if (!account) err.push('Selecione uma conta.')
 
         setErrors(err)
         if (err.length > 0) return
 
         const newPosting: TPosting1 = {
-            id: '5',
+            id: 5,
             description: description,
             category: category,
             date: date,
             value: value,
             type: 'income',
-            account_id: account,
-            user_id: '0001'
+            account_id: account || 1,
+            user_id: 1
         }
 
         dispatch(addPosting(newPosting))
@@ -58,7 +58,7 @@ export const Income = ({ closeModal }: Props) => {
         setDescription('')
         setValue(0)
         setDate(dateNow())
-        setAccount('')
+        setAccount(undefined)
         setCategory('')
     }
 
@@ -80,7 +80,7 @@ export const Income = ({ closeModal }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Conta
-                <S.Select onChange={(e) => setAccount(e.target.value)} value={account}>
+                <S.Select onChange={(e) => setAccount(parseInt(e.target.value))} value={account}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
@@ -89,7 +89,7 @@ export const Income = ({ closeModal }: Props) => {
                 Categoria
                 <S.Select onChange={(e) => setCategory(e.target.value)} value={category}>
                     <option></option>
-                    {categories.map((item) => item.type === 'Income' && <option>{item.name}</option>)}
+                    {categories.map((item) => item.type === 'Income' && <option key={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

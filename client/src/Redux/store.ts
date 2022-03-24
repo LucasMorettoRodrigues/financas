@@ -6,7 +6,7 @@ import AccountReducer from './accountsSlice'
 const store = configureStore({
     reducer: {
         postings: PostingReducer,
-        accounts: AccountReducer
+        accounts: AccountReducer,
     },
 })
 

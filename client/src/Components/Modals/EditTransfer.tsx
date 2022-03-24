@@ -9,7 +9,7 @@ import * as S from './styles'
 
 type Props = {
     closeModal: () => void,
-    data: TPosting
+    data: TPosting,
 }
 
 export const EditTransfer = ({ closeModal, data }: Props) => {
@@ -31,9 +31,9 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
         if (description.length < 1) err.push('Forneça a descrição.')
         if (value === 0) err.push('Valor deve ser maior que 0.')
         if (isNaN(value)) err.push('Forneça o valor.')
-        if (toAccount.length < 1) err.push('Selecione a conta de entrada.')
-        if (fromAccount!.length < 1) err.push('Selecione a conta de saída.')
-        if (fromAccount === toAccount && fromAccount.length > 0) err.push('Conta de saída igual a conta de entrada.')
+        if (!toAccount) err.push('Selecione a conta de entrada.')
+        if (!fromAccount!) err.push('Selecione a conta de saída.')
+        if (fromAccount === toAccount && fromAccount) err.push('Conta de saída igual a conta de entrada.')
         if (accounts.find(x => x.id === fromAccount) &&
             accounts.find(x => x.id === fromAccount)?.balance! < value) err.push('Saldo insuficiente.')
 
@@ -93,14 +93,14 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Saiu da conta
-                <S.Select onChange={(e) => setFromAccount(e.target.value)} value={fromAccount}>
+                <S.Select onChange={(e) => setFromAccount(parseInt(e.target.value))} value={fromAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.InputLabel>
                 Entrou na conta
-                <S.Select onChange={(e) => setToAccount(e.target.value)} value={toAccount}>
+                <S.Select onChange={(e) => setToAccount(parseInt(e.target.value))} value={toAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>

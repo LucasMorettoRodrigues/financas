@@ -1,16 +1,16 @@
 export const accounts = [
     {
-        id: "0001",
+        id: 1,
         name: "Banco do Brasil",
         type: "conta corrente",
         balance: 10000,
-        user_id: "0001"
+        user_id: 1
     },
     {
-        id: "0002",
+        id: 2,
         name: "Banco Inter",
         type: "conta corrente",
         balance: 20000,
-        user_id: "0001"
+        user_id: 1
     }
 ]

@@ -23,10 +23,10 @@ export const postingSlice = createSlice({
                         : item
                     ))
         },
-        deletePostingById: (state, action: PayloadAction<string>) => {
+        deletePostingById: (state, action: PayloadAction<number>) => {
             state.postings = state.postings.filter((item) => item.id !== action.payload)
         },
-        deletePostingsByAccountId: (state, action: PayloadAction<string>) => {
+        deletePostingsByAccountId: (state, action: PayloadAction<number>) => {
             state.postings = state.postings.filter((item) => item.account_id !== action.payload)
         }
     }

@@ -10,7 +10,7 @@ import * as S from './styles'
 
 type Props = {
     closeModal: () => void,
-    data: TPosting
+    data: TPosting,
 }
 
 export const EditIncome = ({ closeModal, data }: Props) => {
@@ -33,7 +33,7 @@ export const EditIncome = ({ closeModal, data }: Props) => {
         if (category.length < 1) err.push('Seleciona uma categoria.')
         if (isNaN(value)) err.push('Forneça o valor.')
         if (value === 0) err.push('Valor deve ser maior que 0.')
-        if (accountId.length < 1) err.push('Selecione uma conta.')
+        if (!accountId) err.push('Selecione uma conta.')
 
         setErrors(err)
         if (err.length > 0) return
@@ -74,7 +74,7 @@ export const EditIncome = ({ closeModal, data }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Conta
-                <S.Select onChange={(e) => setAccountId(e.target.value)} value={accountId}>
+                <S.Select onChange={(e) => setAccountId(parseInt(e.target.value))} value={accountId}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
@@ -83,7 +83,7 @@ export const EditIncome = ({ closeModal, data }: Props) => {
                 Categoria
                 <S.Select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option></option>
-                    {categories.map((item) => item.type === 'Income' && <option>{item.name}</option>)}
+                    {categories.map((item) => item.type === 'Income' && <option key={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

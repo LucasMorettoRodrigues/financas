@@ -19,8 +19,8 @@ export const Transfer = ({ closeModal }: Props) => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState(0)
     const [date, setDate] = useState(dateNow())
-    const [fromAccount, setFromAccount] = useState('')
-    const [toAccount, setToAccount] = useState('')
+    const [fromAccount, setFromAccount] = useState<number | undefined>(undefined)
+    const [toAccount, setToAccount] = useState<number | undefined>(undefined)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -30,9 +30,9 @@ export const Transfer = ({ closeModal }: Props) => {
         if (description.length < 1) err.push('Forneça a descrição.')
         if (value === 0) err.push('Valor deve ser maior que 0.')
         if (isNaN(value)) err.push('Forneça o valor.')
-        if (toAccount.length < 1) err.push('Selecione a conta de entrada.')
-        if (fromAccount.length < 1) err.push('Selecione a conta de saída.')
-        if (fromAccount === toAccount && fromAccount.length > 0) err.push('Conta de saída igual a conta de entrada.')
+        if (!toAccount) err.push('Selecione a conta de entrada.')
+        if (!fromAccount) err.push('Selecione a conta de saída.')
+        if (fromAccount === toAccount && fromAccount) err.push('Conta de saída igual a conta de entrada.')
         if (accounts.find(x => x.id === fromAccount) &&
             accounts.find(x => x.id === fromAccount)?.balance! < value) err.push('Saldo insuficiente.')
 
@@ -40,26 +40,26 @@ export const Transfer = ({ closeModal }: Props) => {
         if (err.length > 0) return
 
         const newPostingOut: TPosting1 = {
-            id: '0006',
+            id: 6,
             description: description,
             category: 'Transf. Saída',
             date: date,
             value: -value,
             type: 'Transferency',
-            account_id: toAccount,
-            user_id: '0001',
+            account_id: toAccount || 1,
+            user_id: 1,
             from_account_id: fromAccount
         }
 
         const newPostingIn: TPosting1 = {
-            id: '0006',
+            id: 6,
             description: description,
             category: 'Transf. Entrada',
             date: date,
             value: value,
             type: 'Transferency',
-            account_id: toAccount,
-            user_id: '0001',
+            account_id: toAccount || 1,
+            user_id: 1,
             from_account_id: fromAccount
         }
 
@@ -75,8 +75,8 @@ export const Transfer = ({ closeModal }: Props) => {
         setDescription('')
         setValue(0)
         setDate(dateNow())
-        setToAccount('')
-        setFromAccount('')
+        setToAccount(undefined)
+        setFromAccount(undefined)
     }
 
     return (
@@ -99,14 +99,14 @@ export const Transfer = ({ closeModal }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Saiu da conta
-                <S.Select onChange={(e) => setFromAccount(e.target.value)} value={fromAccount}>
+                <S.Select onChange={(e) => setFromAccount(parseInt(e.target.value))} value={fromAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.InputLabel>
                 Entrou na conta
-                <S.Select onChange={(e) => setToAccount(e.target.value)} value={toAccount}>
+                <S.Select onChange={(e) => setToAccount(parseInt(e.target.value))} value={toAccount}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>

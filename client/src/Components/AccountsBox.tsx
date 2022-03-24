@@ -120,8 +120,8 @@ const Button = styled.button`
 
 export const AccountsBox = () => {
 
-    const accounts = useAppSelector(state => state.accounts.accounts)
     const dispatch = useAppDispatch()
+    const accounts = useAppSelector(state => state.accounts.accounts)
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [accountToEdit, setAccountToEdit] = useState<TAccount | null>(null)
