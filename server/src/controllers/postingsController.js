@@ -1,8 +1,29 @@
+const Category = require('../models/Category')
 const Posting = require('../models/Posting')
+const Sequelize = require('sequelize')
 
 const getPostings = async (req, res) => {
     try {
-        const postings = await Posting.findAll()
+        Posting.belongsTo(Category, { foreignKey: 'category_id' })
+
+        const postings = await Posting.findAll({
+            include: [{
+                model: Category,
+                attributes: []
+            }],
+            attributes: [
+                'id',
+                'description',
+                'date',
+                'type',
+                'value',
+                'account_id',
+                'user_id',
+                [Sequelize.literal('"category"."name"'), 'category']
+            ],
+            raw: true
+        })
+
         res.status(200).json(postings)
     } catch (error) {
         res.status(500).json(error)

@@ -5,8 +5,13 @@ import axios from 'axios'
 export const getPostings = createAsyncThunk(
     'postings/getPostings',
     async () => {
-        const data = await axios.get('http://localhost:5000/api/v1/accounts')
-        const postings = data.data.map((pos: { date: string }) => (Object.assign({}, pos, { date: pos.date.substring(0, 10) })))
+        const data = await axios.get('http://localhost:5000/api/v1/postings')
+        const postings = data.data
+            .map((pos: { date: string, value: string }) =>
+            (Object.assign(
+                {},
+                pos,
+                { date: pos.date.substring(0, 10), value: parseFloat(pos.value) })))
         return postings
     }
 )
