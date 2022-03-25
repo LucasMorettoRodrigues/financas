@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { categories } from "../../Data/categories"
-import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks"
 import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
@@ -18,10 +17,10 @@ export const Income = ({ closeModal }: Props) => {
     const accounts = useAppSelector(state => state.accounts.accounts)
 
     const [description, setDescription] = useState('')
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState<string>('0')
     const [date, setDate] = useState(dateNow())
-    const [account, setAccount] = useState<number | undefined>(undefined)
-    const [category, setCategory] = useState('')
+    const [account, setAccount] = useState('')
+    const [categoryId, setCategoryId] = useState('')
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -29,9 +28,9 @@ export const Income = ({ closeModal }: Props) => {
         let err = []
 
         if (description.length < 1) err.push('Forneça a descrição.')
-        if (category.length < 1) err.push('Seleciona uma categoria.')
-        if (value === 0) err.push('Valor deve ser maior que 0.')
-        if (isNaN(value)) err.push('Forneça o valor.')
+        if (!categoryId) err.push('Selecione uma categoria.')
+        if (parseFloat(value) <= 0) err.push('Valor deve ser positivo.')
+        if (!value) err.push('Forneça o valor.')
         if (!account) err.push('Selecione uma conta.')
 
         setErrors(err)
@@ -40,26 +39,26 @@ export const Income = ({ closeModal }: Props) => {
         const newPosting: TPosting1 = {
             id: 5,
             description: description,
-            category: category,
+            category: 'teste',
+            category_id: parseInt(categoryId),
             date: date,
-            value: value,
-            type: 'income',
-            account_id: account || 1,
+            value: parseFloat(value),
+            type: 'Income',
+            account_id: parseInt(account),
             user_id: 1
         }
 
         dispatch(addPosting(newPosting))
-        dispatch(refreshBalance({ account_id: account, value: value }))
         closeModal()
         clearFields()
     }
 
     const clearFields = () => {
         setDescription('')
-        setValue(0)
+        setValue('0')
         setDate(dateNow())
-        setAccount(undefined)
-        setCategory('')
+        setAccount('')
+        setCategoryId('')
     }
 
     return (
@@ -72,24 +71,24 @@ export const Income = ({ closeModal }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Valor
-                <S.Input onChange={(e) => setValue(parseFloat(e.target.value))} value={value} min={0} type='number'></S.Input>
+                <S.Input onChange={(e) => setValue(e.target.value)} value={value} min={0} type='number'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Data
-                <S.Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></S.Input>
+                <S.Input onChange={(e) => setDate(e.target.value)} value={date} type='date'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Conta
-                <S.Select onChange={(e) => setAccount(parseInt(e.target.value))} value={account}>
+                <S.Select onChange={(e) => setAccount(e.target.value)} value={account}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.InputLabel>
                 Categoria
-                <S.Select onChange={(e) => setCategory(e.target.value)} value={category}>
+                <S.Select onChange={(e) => setCategoryId(e.target.value)} value={categoryId}>
                     <option></option>
-                    {categories.map((item) => item.type === 'Income' && <option key={item.id}>{item.name}</option>)}
+                    {categories.map((item) => item.type === 'Income' && <option value={item.id} key={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

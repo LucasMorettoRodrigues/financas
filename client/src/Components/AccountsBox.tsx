@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../Redux/hooks'
 import { TAccount } from '../Types/taccount'
 import { Modal } from './Modal'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
-import { deletePostingsByAccountId } from '../Redux/postingsSlice'
 import { deleteAccountById } from '../Redux/accountsSlice'
 
 const Container = styled.div`
@@ -132,7 +131,6 @@ export const AccountsBox = () => {
     }
 
     const handleDelete = (account: TAccount) => {
-        dispatch(deletePostingsByAccountId(account.id))
         dispatch(deleteAccountById(account.id))
     }
 

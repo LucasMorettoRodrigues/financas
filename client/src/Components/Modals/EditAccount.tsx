@@ -16,7 +16,7 @@ export const EditAccount = ({ closeModal, data }: Props) => {
 
     const [name, setName] = useState(data.name)
     const [type, setType] = useState(data.type)
-    const [balance, setBalance] = useState(data.balance)
+    const [balance, setBalance] = useState<string>(data.balance)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -25,20 +25,21 @@ export const EditAccount = ({ closeModal, data }: Props) => {
 
         if (name.length < 1) err.push('Forneça o nome da conta.')
         if (type.length < 1) err.push('Forneça o tipo da conta.')
-        if (isNaN(balance)) err.push('Forneça o valor.')
+        if (!balance) err.push('Forneça o valor.')
+        if (parseFloat(balance) < 0) err.push('Saldo deve ser positivo.')
 
         setErrors(err)
         if (err.length > 0) return
 
-        const newAccount: TAccount = {
+        const updatedAccount: TAccount = {
             id: data.id,
             name: name,
             type: type,
-            balance: balance,
+            balance: parseFloat(balance),
             user_id: data.user_id
         }
 
-        dispatch(editAccount(newAccount))
+        dispatch(editAccount(updatedAccount))
         closeModal()
     }
 
@@ -56,7 +57,7 @@ export const EditAccount = ({ closeModal, data }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Saldo
-                <S.Input onChange={(e) => setBalance(parseFloat(e.target.value))} value={balance} min={0} type='number'></S.Input>
+                <S.Input onChange={(e) => setBalance(e.target.value)} value={balance} min={0} type='number'></S.Input>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>
         </>

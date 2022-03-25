@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TPosting1 } from '../Types/tposting'
 import axios from 'axios'
+import { getAccounts } from './accountsSlice'
 
 export const getPostings = createAsyncThunk(
     'postings/getPostings',
@@ -16,6 +17,33 @@ export const getPostings = createAsyncThunk(
     }
 )
 
+export const addPosting = createAsyncThunk(
+    'postings/addPosting',
+    async (newPosting: TPosting1, thunkAPI) => {
+        await axios.post('http://localhost:5000/api/v1/postings', newPosting)
+        thunkAPI.dispatch(getAccounts())
+        thunkAPI.dispatch(getPostings())
+    }
+)
+
+export const editPosting = createAsyncThunk(
+    'postings/editPosting',
+    async (posting: TPosting1, thunkAPI) => {
+        await axios.patch(`http://localhost:5000/api/v1/postings/${posting.id}`, posting)
+        thunkAPI.dispatch(getAccounts())
+        thunkAPI.dispatch(getPostings())
+    }
+)
+
+export const deletePostingById = createAsyncThunk(
+    'postings/deletePosting',
+    async (postingId: number, thunkAPI) => {
+        await axios.delete(`http://localhost:5000/api/v1/postings/${postingId}`)
+        thunkAPI.dispatch(getAccounts())
+        thunkAPI.dispatch(getPostings())
+    }
+)
+
 type State = {
     postings: TPosting1[],
     status: string | null
@@ -28,27 +56,6 @@ export const postingSlice = createSlice({
         status: null
     } as State,
     reducers: {
-        addPosting: (state, action: PayloadAction<TPosting1>) => {
-            state.postings = [...state.postings, action.payload]
-        },
-        editPosting: (state, action: PayloadAction<TPosting1>) => {
-            state.postings =
-                action.payload.type === 'Transferency'
-                    ? state.postings.map((item) => (item.id === action.payload.id && item.category === action.payload.category
-                        ? action.payload
-                        : item
-                    ))
-                    : state.postings.map((item) => (item.id === action.payload.id
-                        ? action.payload
-                        : item
-                    ))
-        },
-        deletePostingById: (state, action: PayloadAction<number>) => {
-            state.postings = state.postings.filter((item) => item.id !== action.payload)
-        },
-        deletePostingsByAccountId: (state, action: PayloadAction<number>) => {
-            state.postings = state.postings.filter((item) => item.account_id !== action.payload)
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(getPostings.pending, (state) => {
@@ -63,10 +70,5 @@ export const postingSlice = createSlice({
         })
     },
 })
-
-export const { addPosting, editPosting, deletePostingById, deletePostingsByAccountId } = postingSlice.actions
-
-// // Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
 
 export default postingSlice.reducer

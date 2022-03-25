@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TAccount } from '../Types/taccount'
 import axios from 'axios'
+import { getPostings } from './postingsSlice'
 
 export const getAccounts = createAsyncThunk(
     'accounts/getAccounts',
@@ -8,6 +9,31 @@ export const getAccounts = createAsyncThunk(
         const data = await axios.get('http://localhost:5000/api/v1/accounts')
         const accounts = data.data.map((acc: { balance: string }) => (Object.assign({}, acc, { balance: parseFloat(acc.balance) })))
         return accounts
+    }
+)
+
+export const addAccount = createAsyncThunk(
+    'accounts/addAccounts',
+    async (newAccount: TAccount, thunkAPI) => {
+        await axios.post('http://localhost:5000/api/v1/accounts', newAccount)
+        thunkAPI.dispatch(getAccounts())
+    }
+)
+
+export const deleteAccountById = createAsyncThunk(
+    'accounts/deleteAccounts',
+    async (accountId: number, thunkAPI) => {
+        await axios.delete(`http://localhost:5000/api/v1/accounts/${accountId}`)
+        thunkAPI.dispatch(getAccounts())
+        thunkAPI.dispatch(getPostings())
+    }
+)
+
+export const editAccount = createAsyncThunk(
+    'accounts/editAccounts',
+    async (account: TAccount, thunkAPI) => {
+        await axios.patch(`http://localhost:5000/api/v1/accounts/${account.id}`, account)
+        thunkAPI.dispatch(getAccounts())
     }
 )
 
@@ -23,24 +49,6 @@ export const accountSlice = createSlice({
         status: null
     } as State,
     reducers: {
-        addAccount: (state, action: PayloadAction<TAccount>) => {
-            state.accounts = [...state.accounts, action.payload]
-        },
-        refreshBalance: (state, action) => {
-            state.accounts = state.accounts.map((account) => (account.id === action.payload.account_id
-                ? Object.assign({}, account, { balance: account.balance + action.payload.value })
-                : account
-            ))
-        },
-        editAccount: (state, action: PayloadAction<TAccount>) => {
-            state.accounts = state.accounts.map((account) => (account.id === action.payload.id
-                ? action.payload
-                : account
-            ))
-        },
-        deleteAccountById: (state, action: PayloadAction<number>) => {
-            state.accounts = state.accounts.filter((account) => account.id !== action.payload)
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(getAccounts.pending, (state) => {
@@ -55,10 +63,5 @@ export const accountSlice = createSlice({
         })
     },
 })
-
-export const { addAccount, refreshBalance, editAccount, deleteAccountById } = accountSlice.actions
-
-// // Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
 
 export default accountSlice.reducer

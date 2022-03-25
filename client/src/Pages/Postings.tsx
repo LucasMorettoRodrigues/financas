@@ -9,7 +9,6 @@ import { useAppSelector } from '../Redux/hooks'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 import { useAppDispatch } from '../Redux/hooks'
 import { deletePostingById } from '../Redux/postingsSlice'
-import { refreshBalance } from '../Redux/accountsSlice'
 
 const Container = styled.div`
     background-color: #F9F9F9;
@@ -194,7 +193,6 @@ export const Postings = () => {
 
     const handleDelete = (posting: TPosting) => {
         dispatch(deletePostingById(posting.id))
-        dispatch(refreshBalance({ account_id: posting.account_id, value: -posting.value }))
     }
 
     return (
@@ -223,10 +221,7 @@ export const Postings = () => {
                                         <TCategory>{posting.category}</TCategory>
                                         <TDescription>{posting.description}</TDescription>
                                         <TableAccount>
-                                            {posting.category === "Transf. Saída"
-                                                ? accounts.find(account => account.id === posting.from_account_id!)!.name
-                                                : accounts.find(account => account.id === posting.account_id)!.name
-                                            }
+                                            {accounts.find(account => account.id === posting.account_id)!.name}
                                         </TableAccount>
                                         <TValue color={posting.value < 0 ? '#FF2D2D' : '#1BB620'}>
                                             {posting.value}

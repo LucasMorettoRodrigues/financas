@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { categories } from "../../Data/categories"
-import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
 import { editPosting } from "../../Redux/postingsSlice"
 import { TPosting, TPosting1 } from "../../Types/tposting"
@@ -19,10 +18,10 @@ export const EditExpense = ({ closeModal, data }: Props) => {
     const accounts = useAppSelector(state => state.accounts.accounts)
 
     const [description, setDescription] = useState(data.description)
-    const [value, setValue] = useState(-data.value)
+    const [value, setValue] = useState<number | ''>(-data.value)
     const [date, setDate] = useState(dateToString(data.date))
     const [accountId, setAccountId] = useState(data.account_id)
-    const [category, setCategory] = useState(data.category)
+    const [categoryId, setCategoryId] = useState(data.category_id)
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -30,12 +29,8 @@ export const EditExpense = ({ closeModal, data }: Props) => {
         let err = []
 
         if (description.length < 1) err.push('Forneça a descrição.')
-        if (category.length < 1) err.push('Seleciona uma categoria.')
-        if (isNaN(value)) err.push('Forneça o valor.')
-        if (value === 0) err.push('Valor deve ser maior que 0.')
-        if (!accountId) err.push('Selecione uma conta.')
-        if (accounts.find(x => x.id === accountId) &&
-            accounts.find(x => x.id === accountId)?.balance! < value) err.push('Saldo insuficiente.')
+        if (!value || value <= 0) err.push('Valor deve ser maior que 0.')
+        if (accounts.find(acc => acc.id === accountId)!.balance! - data.value < value) err.push('Saldo insuficiente.')
 
         setErrors(err)
         if (err.length > 0) return
@@ -43,7 +38,8 @@ export const EditExpense = ({ closeModal, data }: Props) => {
         const editedPosting: TPosting1 = {
             id: data.id,
             description: description,
-            category: category,
+            category: '',
+            category_id: categoryId,
             date: date,
             value: -value,
             type: data.type,
@@ -52,9 +48,6 @@ export const EditExpense = ({ closeModal, data }: Props) => {
         }
 
         dispatch(editPosting(editedPosting))
-        dispatch(refreshBalance({ account_id: data.account_id, value: -data.value }))
-        dispatch(refreshBalance({ account_id: accountId, value: - value }))
-
         closeModal()
     }
 
@@ -68,7 +61,7 @@ export const EditExpense = ({ closeModal, data }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Valor
-                <S.Input onChange={(e) => setValue(parseFloat(e.target.value))} value={value} min={0} type='number'></S.Input>
+                <S.Input onChange={(e) => setValue(e.target.value ? parseFloat(e.target.value) : '')} value={value} min={0} type='number'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Data
@@ -77,15 +70,13 @@ export const EditExpense = ({ closeModal, data }: Props) => {
             <S.InputLabel>
                 Conta
                 <S.Select onChange={(e) => setAccountId(parseInt(e.target.value))} value={accountId}>
-                    <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.InputLabel>
                 Categoria
-                <S.Select value={category} onChange={(e) => setCategory(e.target.value)}>
-                    <option></option>
-                    {categories.map((item) => item.type === 'Expense' && <option key={item.id}>{item.name}</option>)}
+                <S.Select onChange={(e) => setCategoryId(parseInt(e.target.value))} value={categoryId} >
+                    {categories.map((item) => item.type === 'Expense' && <option value={item.id} key={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

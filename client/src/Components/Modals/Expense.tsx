@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { refreshBalance } from "../../Redux/accountsSlice"
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks'
 import { addPosting } from "../../Redux/postingsSlice"
 import { TPosting1 } from "../../Types/tposting"
@@ -18,10 +17,10 @@ export const Expense = ({ closeModal }: Props) => {
     const accounts = useAppSelector(state => state.accounts.accounts)
 
     const [description, setDescription] = useState('')
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState('0')
     const [date, setDate] = useState(dateNow())
-    const [accountId, setAccountId] = useState<number | undefined>(undefined)
-    const [category, setCategory] = useState('')
+    const [accountId, setAccountId] = useState('')
+    const [categoryId, setCategoryId] = useState('')
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -29,39 +28,39 @@ export const Expense = ({ closeModal }: Props) => {
         let err = []
 
         if (description.length < 1) err.push('Forneça a descrição.')
-        if (category.length < 1) err.push('Seleciona uma categoria.')
-        if (isNaN(value)) err.push('Forneça o valor.')
-        if (value === 0) err.push('Valor deve ser maior que 0.')
+        if (!categoryId) err.push('Selecione uma categoria.')
+        if (!value) err.push('Forneça o valor.')
+        if (parseFloat(value) <= 0) err.push('Valor deve ser maior que 0.')
         if (!accountId) err.push('Selecione uma conta.')
-        if (accounts.find(x => x.id === accountId) &&
-            accounts.find(x => x.id === accountId)?.balance! < value) err.push('Saldo insuficiente.')
+        if (accounts.find(x => x.id === parseInt(accountId)) &&
+            accounts.find(x => x.id === parseInt(accountId))!.balance! < parseFloat(value)) err.push('Saldo insuficiente.')
 
         setErrors(err)
         if (err.length > 0) return
 
         const newPosting: TPosting1 = {
-            id: 6,
+            id: 1,
             description: description,
-            category: category,
+            category: "teste",
+            category_id: parseInt(categoryId),
             date: date,
-            value: -value,
+            value: -parseFloat(value),
             type: 'Expense',
-            account_id: accountId || 1,
-            user_id: 1
+            user_id: 1,
+            account_id: parseInt(accountId),
         }
 
         dispatch(addPosting(newPosting))
-        dispatch(refreshBalance({ account_id: accountId, value: -value }))
         closeModal()
         clearFields()
     }
 
     const clearFields = () => {
         setDescription('')
-        setValue(0)
+        setValue('')
         setDate(dateNow())
-        setAccountId(undefined)
-        setCategory('')
+        setAccountId('')
+        setCategoryId('')
     }
 
     return (
@@ -74,24 +73,24 @@ export const Expense = ({ closeModal }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Valor
-                <S.Input onChange={(e) => setValue(parseFloat(e.target.value))} value={value} min={0} type='number'></S.Input>
+                <S.Input onChange={(e) => setValue(e.target.value)} value={value} min={0} type='number'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Data
-                <S.Input onChange={(e) => setDate(e.target.value)} value={dateNow()} type='date'></S.Input>
+                <S.Input onChange={(e) => setDate(e.target.value)} value={date} type='date'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Conta
-                <S.Select onChange={(e) => setAccountId(parseInt(e.target.value))} value={accountId}>
+                <S.Select onChange={(e) => setAccountId(e.target.value)} value={accountId}>
                     <option></option>
                     {accounts.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.InputLabel>
                 Categoria
-                <S.Select value={category} onChange={(e) => setCategory(e.target.value)}>
+                <S.Select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
                     <option></option>
-                    {categories.map((item) => item.type === 'Expense' && <option key={item.id}>{item.name}</option>)}
+                    {categories.map((item) => item.type === 'Expense' && <option value={item.id} key={item.id}>{item.name}</option>)}
                 </S.Select>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>

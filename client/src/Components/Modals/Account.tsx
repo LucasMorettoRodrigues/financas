@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { addAccount } from "../../Redux/accountsSlice"
+import { addAccount, getAccounts } from "../../Redux/accountsSlice"
 import { useAppDispatch } from "../../Redux/hooks"
 import { TAccount } from "../../Types/taccount"
 import { Error } from "./Error"
@@ -15,7 +15,7 @@ export const Account = ({ closeModal }: Props) => {
 
     const [name, setName] = useState('')
     const [type, setType] = useState('')
-    const [initialBalance, setInitialBalance] = useState(0)
+    const [initialBalance, setInitialBalance] = useState('0')
     const [errors, setErrors] = useState<string[]>([])
 
     const handleOnClick = () => {
@@ -24,7 +24,8 @@ export const Account = ({ closeModal }: Props) => {
 
         if (name.length < 1) err.push('Forneça o nome da conta.')
         if (type.length < 1) err.push('Forneça o tipo da conta.')
-        if (isNaN(initialBalance)) err.push('Forneça o valor.')
+        if (!initialBalance) err.push('Forneça o valor.')
+        if (parseFloat(initialBalance) < 0) err.push('Saldo deve ser positivo.')
 
         setErrors(err)
         if (err.length > 0) return
@@ -33,11 +34,12 @@ export const Account = ({ closeModal }: Props) => {
             id: 5,
             name: name,
             type: type,
-            balance: initialBalance,
+            balance: parseFloat(initialBalance!),
             user_id: 1
         }
 
         dispatch(addAccount(newAccount))
+        dispatch(getAccounts())
         clearFields()
         closeModal()
     }
@@ -45,7 +47,7 @@ export const Account = ({ closeModal }: Props) => {
     const clearFields = () => {
         setName('')
         setType('')
-        setInitialBalance(0)
+        setInitialBalance('0')
     }
 
     return (
@@ -62,7 +64,7 @@ export const Account = ({ closeModal }: Props) => {
             </S.InputLabel>
             <S.InputLabel>
                 Saldo Initial
-                <S.Input onChange={(e) => setInitialBalance(parseFloat(e.target.value))} value={initialBalance} min={0} type='number'></S.Input>
+                <S.Input onChange={(e) => setInitialBalance(e.target.value)} value={initialBalance} min={0} type='number'></S.Input>
             </S.InputLabel>
             <S.Button onClick={handleOnClick}>Continuar</S.Button>
         </>
