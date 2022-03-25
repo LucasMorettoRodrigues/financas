@@ -3,29 +3,41 @@ import styled from "styled-components"
 
 const Container = styled.div`
     display: flex;
-    min-height: 80vh;
+    height: 82vh;
+    max-width: 100vw;
 `
 const Left = styled.div`
-    flex: 1;
-    justify-content: center;
+    flex-basis: 50%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
-    @media(max-width: 920px) {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+    @media(max-width: 700px) {
+        flex-basis: 100%;
     }
 `
 const Right = styled.div`
-    margin-top: -80px;
+    flex-basis: 50%;
+    height: 95%;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
 
-    @media(max-width: 920px) {
+    @media(max-width: 700px) {
         display: none;
     }
 `
+const Image = styled.img`
+    filter: hue-rotate(175deg);
+    margin-top: -40px;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+`
+
 const PrimaryText = styled.h2`
-    margin-top: 8%;
-    margin-left: 10px;
-    margin-right: 20px;
+    max-width: 450px;
     font-size: 50px;
     color: #333;
 
@@ -33,29 +45,28 @@ const PrimaryText = styled.h2`
         color: darkgreen
     }
 
-    @media(max-width: 920px) {
+    @media(max-width: 990px) {
         margin: 0;
         font-size: 40px;
     }
 `
 const SecondaryText = styled.h3`
-    margin-left: 10px;
-    margin-bottom: 20px;
     font-size: 25px;
     font-weight: 200;
+    margin-bottom: 10px;
     color: #777;
 
-    @media(max-width: 430px) {
+    @media(max-width: 990px) {
         font-size: 20px
     }
 `
 const Button = styled.button`
-    margin-left: 10px;
-    padding: 15px 100px;
+    padding: 15px 80px;
+    min-width: 276px;
     border-radius: 10px;
     border: 3px solid darkgreen;
     background-color: darkgreen;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
     color: white;
@@ -73,11 +84,7 @@ const Button = styled.button`
         padding: 15px 0;
     }
 `
-const Image = styled.img`
-    filter: hue-rotate(175deg);
-    height: 550px;
-    width: auto;
-`
+
 
 export const Header = () => {
     return (
@@ -96,7 +103,6 @@ export const Header = () => {
             <Right>
                 <Image src="https://cdn-icons-png.flaticon.com/512/2040/2040826.png"></Image>
             </Right>
-
         </Container>
     )
 }
