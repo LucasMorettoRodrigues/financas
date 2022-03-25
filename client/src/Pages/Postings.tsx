@@ -64,16 +64,15 @@ const Data = styled.p`
 const TableItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 20px;
     margin-bottom: 8px;
+    flex-wrap: wrap;
 
-    @media(max-width: 452px) {
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-bottom: 20px;
+    @media(max-width: 562px) {
+        margin-bottom: 10px;
     }
 `
 const TDate = styled.div`
+    margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,46 +86,59 @@ const TDate = styled.div`
     min-width: 35px;
 `
 const TCategory = styled.div`
-    flex: 1;
+    margin: 5px;
     color: #333;
     font-weight: 500;
     font-size: 15px;
-    min-width: 100px;
+    width: 110px;
+    min-width: 110px;
     
+    @media(max-width: 562px) {
+        width: 70%;
+    }
 `
 const TDescription = styled.div`
     flex: 1.5;
     color: #555;
     font-weight: 100;
     font-size: 19px;
-    min-width: 100px;
+    margin: 5px;
 
-    @media(max-width: 452px) {
-        text-align: center;
+    @media(max-width: 750px) {
+        min-width: 200px;
+    }
+
+    @media(max-width: 562px) {
+        min-width: 340px;
+        margin-left: 50px;
     }
 `
 const TableAccount = styled.div`
-    flex: 1;
     font-size: 15px;
     font-weight: 400;
     color: #888;
     font-style: italic;
+    width: 100px;
+    margin-left: 10px;
 
     @media(max-width: 750px) {
         display: none;
     }
 `
 const TValue = styled.div<{ color: string }>`
-    width: 100px;
+    margin: 5px;
+    width: 80px;
     text-align: end;
     color: ${props => props.color};
     font-size: 18px;
     font-weight: 400;
+    margin-left: 10px;
+    min-width: 80px;
 
-    @media(max-width: 452px) {
-        min-width: 100px;
+    @media(max-width: 562px) {
         flex: 1;
-        text-align: center;
+        margin-left: 50px;
+        text-align: left;
     }
 `
 const Info = styled.div`
@@ -137,12 +149,13 @@ const Info = styled.div`
     margin-bottom: 10px;
 `
 const Buttons = styled.div`
+    margin: 5px;
     display: flex;
-    margin-left: 10px;
 
-    @media(max-width: 452px) {
+    @media(max-width: 562px) {
         flex: 1;
-        justify-content: center;
+        justify-content: right;
+        margin-left: 50px;
     }
 `
 const Button = styled.button`
@@ -151,7 +164,7 @@ const Button = styled.button`
     border: none;
     background-color: white;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 5px;
     color: #888;
 
     &:hover {

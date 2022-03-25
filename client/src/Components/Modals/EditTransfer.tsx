@@ -38,12 +38,13 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
         const editedPosting: TPosting1 = {
             id: data.id,
             description: description,
-            category: data.category,
+            category: '',
             date: date,
             value: data.category === 'Transf. Saída' ? -parseFloat(value) : parseFloat(value),
-            type: data.type,
+            type: '',
             account_id: accountId,
-            user_id: data.user_id,
+            user_id: 0,
+            category_id: data.category === 'Transf. Saída' ? 14 : 15,
         }
 
         dispatch(editPosting(editedPosting))
@@ -56,7 +57,7 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={17} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor

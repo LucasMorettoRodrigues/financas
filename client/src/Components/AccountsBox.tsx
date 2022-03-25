@@ -37,18 +37,16 @@ const ListItem = styled.li`
     padding: 5px;
     box-shadow: 2px 2px 5px #999;
     border-radius: 10px;
-    gap: 15px;
     margin-bottom: 10px;
     background-color: white;
 
     @media(max-width: 750px) {
         flex-wrap: wrap;
-        gap: 10px;
         padding: 10px;
     }
 `
 const AccountIcon = styled.div`
-    margin-left: 5px;
+    margin: 5px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -61,6 +59,7 @@ const AccountIcon = styled.div`
     font-size: 20px;
 `
 const AccountName = styled.h4`
+    margin: 5px;
     width: 150px;
     color: #444;
     font-weight: 600;
@@ -71,8 +70,13 @@ const AccountName = styled.h4`
         flex: 1;
         min-width: 160px;
     }
+
+    @media(max-width: 531px) {
+        min-width: 70%;
+    }
 `
 const AccountType = styled.p`
+    margin: 5px;
     flex: 1;
     text-align: center;
     color: #888;
@@ -83,24 +87,32 @@ const AccountType = styled.p`
     }
 `
 const AccountValue = styled.h3`
+    margin: 5px;
     color: #2783E5;
     font-weight: 600;
     font-size: 20px;
     min-width: 100px;
 
     @media(max-width: 750px) {
-        
         flex: 1;
-        text-align: center;
+    }
+
+    @media(max-width: 530px) {
+        margin-left: 64px;
     }
 `
 const Buttons = styled.div`
-    margin-right: 20px;
+    margin: 5px;
+    padding-right: 15px;
     display: flex;
 
     @media(max-width: 750px) {
+        justify-content: end;
+    }
+
+    @media(max-width: 530px) {
         flex: 1;
-        justify-content: center;
+        justify-content: end;
     }
 `
 const Button = styled.button`

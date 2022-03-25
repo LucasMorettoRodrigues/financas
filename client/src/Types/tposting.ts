@@ -8,8 +8,7 @@ export type TPosting = {
     account_id: number,
     user_id: number
     from_account_id?: number,
-    category_id?: number
-
+    category_id: number
 }
 
 export type TPosting1 = {
@@ -22,5 +21,5 @@ export type TPosting1 = {
     account_id: number,
     user_id: number,
     from_account_id?: number
-    category_id?: number
+    category_id: number
 }

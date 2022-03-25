@@ -109,7 +109,6 @@ export const AppNavbar = () => {
                 <Center>
                     <List>
                         <Link to={'/app'}><ListItem>Resumo</ListItem></Link>
-                        {/* <Link to={'/app/accounts'}><ListItem>Contas</ListItem></Link> */}
                         <Link to={'/app/postings'}><ListItem>Lançamentos</ListItem></Link>
                     </List>
                 </Center>

@@ -11,7 +11,9 @@ const categories = [
     { name: 'Celular', type: 'Expense', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
     { name: 'Conta Luz', type: 'Expense', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
     { name: 'Conta Agua', type: 'Expense', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-    { name: 'Aluguel', type: 'Expense', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+    { name: 'Aluguel', type: 'Expense', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { name: 'Transf. Saída', type: 'Transferency', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { name: 'Transf. Entrada', type: 'Transferency', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
 ]
 
 module.exports = categories

@@ -6,6 +6,8 @@ import { Postings } from "./Pages/Postings";
 import { useAppDispatch } from "./Redux/hooks";
 import { getAccounts } from "./Redux/accountsSlice";
 import { getPostings } from "./Redux/postingsSlice";
+import { Constructing } from "./Pages/Constructing";
+import { NotFound } from "./Pages/NotFound";
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/app" element={<Overview />} />
         <Route path="/app/postings" element={<Postings />} />
+        <Route path="/constructing" element={<Constructing />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

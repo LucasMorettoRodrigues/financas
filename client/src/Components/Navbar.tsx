@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { useState } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
     display: flex;
@@ -28,6 +29,8 @@ const Center = styled.div`
     }
 `
 const Right = styled.div`
+    z-index: 10;
+    
     @media(max-width: 920px) {
         display: none;
     }
@@ -35,12 +38,12 @@ const Right = styled.div`
 
 const List = styled.ul`
     display: flex;
+    z-index: 10;
 `
 const ListItem = styled.li`
     padding: 15px;
     font-weight: 300;
     font-size: 20px;
-    z-index: 1;
     border-bottom: 2px solid lightgreen;
     cursor: pointer;
     transition: all .5s ease;
@@ -103,28 +106,28 @@ export const Navbar = () => {
             <Left>Finanças</Left>
             <Center>
                 <List>
-                    <ListItem>Início</ListItem>
-                    <ListItem>Quem Somos</ListItem>
-                    <ListItem>Serviços</ListItem>
-                    <ListItem>Contato</ListItem>
+                    <Link to={'/constructing'}><ListItem>Início</ListItem></Link>
+                    <Link to={'/constructing'}><ListItem>Quem Somos</ListItem></Link>
+                    <Link to={'/constructing'}><ListItem>Serviços</ListItem></Link>
+                    <Link to={'/constructing'}><ListItem>Contato</ListItem></Link>
                 </List>
             </Center>
             <Right>
                 <List>
-                    <ListItem>Login</ListItem>
-                    <ListItem>Register</ListItem>
+                    <ListItem><Link to={'/constructing'}>Login</Link></ListItem>
+                    <Link to={'/constructing'}><ListItem>Register</ListItem></Link>
                 </List>
             </Right>
             <ResponsiveMenu>
                 <GiHamburgerMenu onClick={() => setIsOpen(true)} fontSize='24px' color='#222' cursor='pointer' />
                 <ResponsiveList isOpen={isOpen}>
                     <CloseButton onClick={() => setIsOpen(false)}><IoCloseOutline fontSize='28px' cursor='pointer' /></CloseButton>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Início</ResponsiveListItem>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Quem Somos</ResponsiveListItem>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Serviços</ResponsiveListItem>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Contato</ResponsiveListItem>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Login</ResponsiveListItem>
-                    <ResponsiveListItem onClick={() => setIsOpen(false)}>Register</ResponsiveListItem>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Início</ResponsiveListItem></Link>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Quem Somos</ResponsiveListItem></Link>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Serviços</ResponsiveListItem></Link>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Contato</ResponsiveListItem></Link>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Login</ResponsiveListItem></Link>
+                    <Link to={'/constructing'}><ResponsiveListItem onClick={() => setIsOpen(false)}>Register</ResponsiveListItem></Link>
                 </ResponsiveList>
             </ResponsiveMenu>
         </Container>
