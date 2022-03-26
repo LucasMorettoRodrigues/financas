@@ -35,12 +35,14 @@ export const EditTransfer = ({ closeModal, data }: Props) => {
         setErrors(err)
         if (err.length > 0) return
 
+        const editedValue = Math.round(parseFloat(value) * 100) / 100
+
         const editedPosting: TPosting1 = {
             id: data.id,
             description: description,
             category: '',
             date: date,
-            value: data.category === 'Transf. Saída' ? -parseFloat(value) : parseFloat(value),
+            value: data.category === 'Transf. Saída' ? -editedValue : editedValue,
             type: '',
             account_id: accountId,
             user_id: 0,

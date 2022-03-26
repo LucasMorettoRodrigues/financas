@@ -40,7 +40,7 @@ export const EditIncome = ({ closeModal, data }: Props) => {
             category: '',
             category_id: categoryId,
             date: date,
-            value: typeof value === 'string' ? 0 : value,
+            value: Math.round(value || 1 * 100) / 100,
             type: data.type,
             account_id: accountId,
             user_id: data.user_id

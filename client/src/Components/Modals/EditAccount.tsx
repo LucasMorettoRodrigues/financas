@@ -35,7 +35,7 @@ export const EditAccount = ({ closeModal, data }: Props) => {
             id: data.id,
             name: name,
             type: type,
-            balance: parseFloat(balance),
+            balance: Math.round(parseFloat(balance) * 100) / 100,
             user_id: data.user_id
         }
 

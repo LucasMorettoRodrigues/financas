@@ -42,7 +42,7 @@ export const Income = ({ closeModal }: Props) => {
             category: 'teste',
             category_id: parseInt(categoryId),
             date: date,
-            value: parseFloat(value),
+            value: Math.round(parseFloat(value) * 100) / 100,
             type: 'Income',
             account_id: parseInt(account),
             user_id: 1

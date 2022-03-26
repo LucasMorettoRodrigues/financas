@@ -44,7 +44,7 @@ export const Expense = ({ closeModal }: Props) => {
             category: "teste",
             category_id: parseInt(categoryId),
             date: date,
-            value: -parseFloat(value),
+            value: -Math.round(parseFloat(value) * 100) / 100,
             type: 'Expense',
             user_id: 1,
             account_id: parseInt(accountId),

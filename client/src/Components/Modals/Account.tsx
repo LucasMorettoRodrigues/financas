@@ -34,7 +34,7 @@ export const Account = ({ closeModal }: Props) => {
             id: 5,
             name: name,
             type: type,
-            balance: parseFloat(initialBalance!),
+            balance: Math.round(parseFloat(initialBalance!) * 100) / 100,
             user_id: 1
         }
 

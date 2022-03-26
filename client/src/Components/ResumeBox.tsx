@@ -50,13 +50,13 @@ const WrapperBottom = styled.div`
     justify-content: space-around;
     flex-wrap: wrap;
 `
-const InfoBox = styled.div`
+const InfoBox = styled.div<{ backgroundColor?: string }>`
     padding: 10px 20px;
     margin: 10px;
     width: 200px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #999;
-    background-color: white;
+    background-color: ${props => props.backgroundColor ? props.backgroundColor : 'white'};
     height: 75px;
     display: flex;
     justify-content: center;
@@ -83,7 +83,11 @@ const Button = styled.button`
     border: none;
     font-size: 22px;
     font-weight: 600;
-    color: #1BB620;
+    color: white;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 `
 
 export const ResumeBox = () => {
@@ -104,42 +108,44 @@ export const ResumeBox = () => {
         setFilteredPostings(postings.filter(item => item.date.getMonth() === new Date().getMonth() + 1))
     }, [postings])
 
+    const monthIncome = Math.round(
+        filteredPostings
+            .filter(item => item.type === 'Income')
+            .reduce((sum, posting) => sum + posting.value, 0) * 100) / 100
+
+    const monthExpense = Math.round(
+        filteredPostings
+            .filter(item => item.type === 'Expense')
+            .reduce((sum, posting) => sum + posting.value, 0) * 100) / 100
+
+    const monthBalance = Math.round((monthIncome - monthExpense) * 100) / 100
+
     return (
         <Container>
             <WrapperTop>
                 <Title>Olá, Visitante</Title>
                 <Title>
-                    Saldo Total: $ <span>{accounts.reduce((sum, account) => sum + account.balance, 0)}</span>
+                    Saldo Total: $ <span>{Math.round(accounts.reduce((sum, account) => sum + account.balance, 0) * 100) / 100}</span>
                 </Title>
             </WrapperTop>
             <WrapperBottom>
                 <InfoBox>
                     <InfoTitle>Receita Mensal</InfoTitle>
-                    <InfoValue color='#1BB620'>$ {filteredPostings
-                        .filter(item => item.type === 'Income')
-                        .reduce((sum, posting) => sum + posting.value, 0)}
+                    <InfoValue color='#1BB620'>$ {monthIncome}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Despesa Mensal</InfoTitle>
-                    <InfoValue color='#FF2D2D'>$ {filteredPostings
-                        .filter(item => item.type === 'Expense')
-                        .reduce((sum, posting) => sum + posting.value, 0)}
+                    <InfoValue color='#FF2D2D'>$ {monthExpense}
                     </InfoValue>
                 </InfoBox>
                 <InfoBox>
                     <InfoTitle>Balanço Mensal</InfoTitle>
-                    <InfoValue color='#2783E5'>$ {filteredPostings
-                        .filter(item => item.type === 'Income')
-                        .reduce((sum, posting) => sum + posting.value, 0) +
-                        filteredPostings
-                            .filter(item => item.type === 'Expense')
-                            .reduce((sum, posting) => sum + posting.value, 0)
-                    }
+                    <InfoValue color='#2783E5'>$ {monthBalance}
                     </InfoValue>
                 </InfoBox>
-                <Link to='/app/postings'><InfoBox><Button>Lançamentos</Button></InfoBox></Link>
+                <Link to='/app/postings'><InfoBox backgroundColor={'#2a9b2e'}><Button>Lançamentos</Button></InfoBox></Link>
             </WrapperBottom>
-        </Container>
+        </Container >
     )
 }
