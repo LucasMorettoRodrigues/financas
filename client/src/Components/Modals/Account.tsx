@@ -56,7 +56,7 @@ export const Account = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Nome da nova conta
-                <S.Input maxLength={15} onChange={(e) => setName(e.target.value)} value={name} type='text'></S.Input>
+                <S.Input maxLength={17} onChange={(e) => setName(e.target.value)} value={name} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Tipo da nova conta

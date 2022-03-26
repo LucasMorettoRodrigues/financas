@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const sequelize = require('./database')
 const cors = require('cors')
@@ -19,5 +20,7 @@ app.use(testRoutes)
 app.use('/api/v1/accounts', accountsRoutes)
 app.use('/api/v1/postings', postingsRoutes)
 
+const port = process.env.PORT || 5000
 
-app.listen(5000, () => console.log('Server is listening on port 5000.'))
+
+app.listen(port, () => console.log(`Server is listening on port ${port}.`))

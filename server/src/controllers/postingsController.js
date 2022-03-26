@@ -51,7 +51,7 @@ const createPosting = async (req, res) => {
         })
 
         const account = await Account.findByPk(newPosting.account_id)
-        account.balance = parseFloat(account.balance) + parseFloat(newPosting.value)
+        account.balance = Math.round((parseFloat(account.balance) + parseFloat(newPosting.value)) * 100) / 100
         account.save()
 
         res.status(200).json(newPosting)
@@ -80,7 +80,7 @@ const updatePosting = async (req, res) => {
 
         if (value || account_id) {
             const formerAccount = await Account.findByPk(posting.account_id)
-            formerAccount.balance = parseFloat(formerAccount.balance) - parseFloat(posting.value)
+            formerAccount.balance = Math.round((parseFloat(formerAccount.balance) - parseFloat(posting.value)) * 100) / 100
 
             formerAccount.save()
 
@@ -88,7 +88,7 @@ const updatePosting = async (req, res) => {
                 ? formerAccount
                 : await Account.findByPk(account_id)
 
-            currentAccount.balance = parseFloat(currentAccount.balance) + parseFloat(value ? value : posting.value)
+            currentAccount.balance = Math.round((parseFloat(currentAccount.balance) + parseFloat(value ? value : posting.value)) * 100) / 100
 
             currentAccount.save()
         }
@@ -114,7 +114,7 @@ const deletePosting = async (req, res) => {
         }
 
         const account = await Account.findByPk(posting.account_id)
-        account.balance = parseFloat(account.balance) - parseFloat(posting.value)
+        account.balance = Math.round((parseFloat(account.balance) - parseFloat(posting.value)) * 100) / 100
         account.save()
 
         posting.destroy()

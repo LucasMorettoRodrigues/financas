@@ -7,8 +7,8 @@ const postings = [
         type: "Expense",
         account_id: 1,
         user_id: 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         description: "Salário",
@@ -18,8 +18,8 @@ const postings = [
         type: "Income",
         account_id: 1,
         user_id: 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         description: "Pizza",
@@ -29,8 +29,8 @@ const postings = [
         type: "Expense",
         account_id: 2,
         user_id: 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         description: "Etanol",
@@ -40,8 +40,8 @@ const postings = [
         type: "Expense",
         account_id: 2,
         user_id: 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         description: "Celular",
@@ -51,8 +51,8 @@ const postings = [
         type: "Expense",
         account_id: 1,
         user_id: 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
 ]
 

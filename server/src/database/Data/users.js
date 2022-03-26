@@ -1,8 +1,8 @@
 const users = [
     {
         name: "Visitante",
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     }
 ]
 

@@ -84,6 +84,7 @@ const Button = styled.button`
     font-size: 22px;
     font-weight: 600;
     color: white;
+    transition: all .5s ease;
 
     &:hover {
         transform: scale(1.1);

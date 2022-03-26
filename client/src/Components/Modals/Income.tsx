@@ -67,7 +67,7 @@ export const Income = ({ closeModal }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={17} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor

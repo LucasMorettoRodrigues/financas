@@ -35,20 +35,22 @@ export const EditExpense = ({ closeModal, data }: Props) => {
         setErrors(err)
         if (err.length > 0) return
 
-        const editedPosting: TPosting1 = {
-            id: data.id,
-            description: description,
-            category: '',
-            category_id: categoryId,
-            date: date,
-            value: -Math.round(value || 1 * 100) / 100,
-            type: data.type,
-            account_id: accountId,
-            user_id: data.user_id
-        }
+        if (typeof value === 'number') {
+            const editedPosting: TPosting1 = {
+                id: data.id,
+                description: description,
+                category: '',
+                category_id: categoryId,
+                date: date,
+                value: -Math.round(value * 100) / 100,
+                type: data.type,
+                account_id: accountId,
+                user_id: data.user_id
+            }
 
-        dispatch(editPosting(editedPosting))
-        closeModal()
+            dispatch(editPosting(editedPosting))
+            closeModal()
+        }
     }
 
     return (
@@ -57,7 +59,7 @@ export const EditExpense = ({ closeModal, data }: Props) => {
             {errors.length > 0 && <Error errors={errors} />}
             <S.InputLabel>
                 Descrição
-                <S.Input maxLength={12} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
+                <S.Input maxLength={17} onChange={(e) => setDescription(e.target.value)} value={description} type='text'></S.Input>
             </S.InputLabel>
             <S.InputLabel>
                 Valor

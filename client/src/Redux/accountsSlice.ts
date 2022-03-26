@@ -6,7 +6,7 @@ import { getPostings } from './postingsSlice'
 export const getAccounts = createAsyncThunk(
     'accounts/getAccounts',
     async () => {
-        const data = await axios.get('http://gdsgfsd2345.herokuapp.com/api/v1/accounts')
+        const data = await axios.get('https://financas--api.herokuapp.com/api/v1/accounts')
         const accounts = data.data.map((acc: { balance: string }) => (Object.assign({}, acc, { balance: parseFloat(acc.balance) })))
         return accounts
     }
@@ -15,7 +15,7 @@ export const getAccounts = createAsyncThunk(
 export const addAccount = createAsyncThunk(
     'accounts/addAccounts',
     async (newAccount: TAccount, thunkAPI) => {
-        await axios.post('http://gdsgfsd2345.herokuapp.com/api/v1/accounts', newAccount)
+        await axios.post('https://financas--api.herokuapp.com/api/v1/accounts', newAccount)
         thunkAPI.dispatch(getAccounts())
     }
 )
@@ -23,7 +23,7 @@ export const addAccount = createAsyncThunk(
 export const deleteAccountById = createAsyncThunk(
     'accounts/deleteAccounts',
     async (accountId: number, thunkAPI) => {
-        await axios.delete(`http://gdsgfsd2345.herokuapp.com/api/v1/accounts/${accountId}`)
+        await axios.delete(`https://financas--api.herokuapp.com/api/v1/accounts/${accountId}`)
         thunkAPI.dispatch(getAccounts())
         thunkAPI.dispatch(getPostings())
     }
@@ -32,7 +32,7 @@ export const deleteAccountById = createAsyncThunk(
 export const editAccount = createAsyncThunk(
     'accounts/editAccounts',
     async (account: TAccount, thunkAPI) => {
-        await axios.patch(`http://gdsgfsd2345.herokuapp.com/api/v1/accounts/${account.id}`, account)
+        await axios.patch(`https://financas--api.herokuapp.com/api/v1/accounts/${account.id}`, account)
         thunkAPI.dispatch(getAccounts())
     }
 )
