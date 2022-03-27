@@ -3,7 +3,7 @@ const Posting = require('../models/Posting')
 
 const getAllAccounts = async (req, res) => {
     try {
-        const accounts = await Account.findAll()
+        const accounts = await Account.findAll({ order: [['id', 'ASC']] })
         return res.status(200).json(accounts)
     } catch (error) {
         return res.status(500).json(error)

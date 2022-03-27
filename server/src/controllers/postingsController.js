@@ -23,7 +23,8 @@ const getPostings = async (req, res) => {
                 'user_id',
                 [Sequelize.literal('"category"."name"'), 'category']
             ],
-            raw: true
+            raw: true,
+            order: [['date', 'ASC']]
         })
 
         res.status(200).json(postings)
