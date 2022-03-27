@@ -16,6 +16,7 @@ const Left = styled.div`
 
     @media(max-width: 920px) {
         font-size: 30px;
+        flex: 1;
     }
 `
 const Center = styled.div`
@@ -57,10 +58,8 @@ const ResponsiveMenu = styled.div`
     display: none;
 
     @media(max-width: 920px) {
-        flex: 1;
         display: flex;
         align-items: center;
-        justify-content: end;
         z-index: 10;
     }
 `

@@ -18,6 +18,10 @@ const Left = styled.div`
     font-weight: 600;
     font-size: 30px;
     color: #111;
+
+    @media(max-width: 750px) {
+        flex: 1;
+    }
 `
 const Center = styled.div`
     flex: 1;
@@ -59,10 +63,8 @@ const ResponsiveMenu = styled.div`
     display: none;
 
     @media(max-width: 750px) {
-        flex: 1;
         display: flex;
         align-items: center;
-        justify-content: end;
     }
 `
 const ResponsiveList = styled.div<{ isOpen: boolean }>`
