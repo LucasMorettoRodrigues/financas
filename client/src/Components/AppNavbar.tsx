@@ -105,7 +105,7 @@ export const AppNavbar = () => {
     return (
         <Container>
             <Wrapper>
-                <Left><Link to={'/'}>Finanças</Link></Left>
+                <Left><Link to={'/financas'}>Finanças</Link></Left>
                 <Center>
                     <List>
                         <Link to={'/app'}><ListItem>Resumo</ListItem></Link>
