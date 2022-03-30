@@ -2,6 +2,9 @@
 
 Finance Tracker App created with PERN stack.
 
+## Live Demo
+[Click here to see live demo.](https://lucasmorettorodrigues.github.io/financas/)
+
 ## Technologies used
 
 ### Frontend
@@ -17,7 +20,10 @@ Finance Tracker App created with PERN stack.
 - Express
 - Sequelize
 - Migrations / Seeds
-- Deploy on Heroku
 
 ### Database
 - PostgreSQL
+
+### Deploy
+- Heroku (back-end)
+- Gh Pages (front-end)
