@@ -119,7 +119,7 @@ export const ResumeBox = () => {
             .filter(item => item.type === 'Expense')
             .reduce((sum, posting) => sum + posting.value, 0) * 100) / 100
 
-    const monthBalance = Math.round((monthIncome - monthExpense) * 100) / 100
+    const monthBalance = Math.round((monthIncome + monthExpense) * 100) / 100
 
     return (
         <Container>
